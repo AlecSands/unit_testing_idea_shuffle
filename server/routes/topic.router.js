@@ -7,7 +7,18 @@ var Topic = require('../models/topic.js');
 // GET route for getting all topics from the db.
 router.get('/', function(req, res){
   console.log('Getting topics from the db');
-  res.sendStatus(200);
+
+  // Mongoose request for all topics
+  Topic.find({}, function(err, result) {
+    if(err) {
+      console.log('find error: ', err);
+      res.sendStatus(500);
+    } else {
+      var allTopics = result;
+      console.log('got all topics:', allTopics);
+      res.send(allTopics);
+    }
+  });
 });
 
 // POST route to create a new topic.

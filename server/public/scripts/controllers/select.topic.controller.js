@@ -9,13 +9,14 @@ myApp.controller('SelectTopicController', function(IdeaShuffleService, $mdDialog
   };
 
   // This array for getting topings from the db.
-  vm.topics = ['Lord of the Rings', 'Endless Space', 'Nature walks'];
+  vm.topics = {};
 
   // Get topics from the db.
   vm.getTopics = function() {
       console.log('Getting topics from the db');
       $http.get('/topic').then(function(response){
         console.log('Got response from topics GET:', response);
+        vm.topics = response.data;
       });
   };
 
@@ -38,6 +39,7 @@ myApp.controller('SelectTopicController', function(IdeaShuffleService, $mdDialog
        // basic POST request to create a new topic.
        $http.post('/topic/create/' + result).then(function(response){
          console.log('Got response from new topic Post:', response);
+         vm.getTopics();
        });
      }, function() {
        // This will run if the user clicks cancel.
