@@ -1,9 +1,9 @@
-var myApp = angular.module('myApp', ['ngRoute']);
+var myApp = angular.module('myApp', ['ngRoute', 'ngMaterial']);
 
 /// Routes ///
 myApp.config(function($routeProvider, $locationProvider) {
   $locationProvider.hashPrefix('');
-  console.log('myApp -- config')
+  console.log('myApp -- config');
   $routeProvider
     .when('/home', {
       templateUrl: '/views/templates/home.html',
@@ -13,21 +13,21 @@ myApp.config(function($routeProvider, $locationProvider) {
       templateUrl: '/views/templates/register.html',
       controller: 'LoginController as lc'
     })
-    .when('/user', {
-      templateUrl: '/views/templates/user.html',
-      controller: 'UserController as uc',
+    .when('/selectTopic', {
+      templateUrl: '/views/templates/selectTopic.html',
+      controller: 'SelectTopicController as stc',
       resolve: {
-        getuser : function(UserService){
-          return UserService.getuser();
+        getuser : function(IdeaShuffleService){
+          return IdeaShuffleService.getuser();
         }
       }
     })
-    .when('/info', {
-      templateUrl: '/views/templates/info.html',
-      controller: 'InfoController',
+    .when('/currentTopic', {
+      templateUrl: '/views/templates/currentTopic.html',
+      controller: 'CurrentTopicController as ctc',
       resolve: {
-        getuser : function(UserService){
-          return UserService.getuser();
+        getuser : function(IdeaShuffleService){
+          return IdeaShuffleService.getuser();
         }
       }
     })

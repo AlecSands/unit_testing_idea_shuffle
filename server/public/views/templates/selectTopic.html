@@ -1,0 +1,13 @@
+<div ng-include="'views/partials/nav.html'"></div>
+<div class="container">
+  <md-content>
+    <h3 id="welcome" class="lead">Welcome, {{stc.userObject.userName}}!</h1>
+    <h1>Select A Topic:</h1>
+    <!-- <md-checkbox ng-model="testing" aria-label="Placeholder Topic 1">
+        Placeholder Topic 1: {{testing}}
+    </md-checkbox> -->
+    <br>
+    <button class="btn btn-default" ng-click="stc.userService.logout()">Log Out</button>
+    <md-button class="md-raised">Log Out</md-button>
+  </md-content>
+</div>
