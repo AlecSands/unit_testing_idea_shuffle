@@ -7,6 +7,9 @@ myApp.controller('SelectTopicController', function(IdeaShuffleService, $mdDialog
   vm.test = function() {
     console.log('Prompting for new topic');
   };
+  
+  // This array for getting topings from the db.
+  vm.topics = ['Lord of the Rings', 'Endless Space', 'Nature walks'];
 
   // Create a dialogue prompt for creating a new topic.
   vm.showPrompt = function(ev) {
