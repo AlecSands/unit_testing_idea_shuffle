@@ -7,9 +7,17 @@ myApp.controller('SelectTopicController', function(IdeaShuffleService, $mdDialog
   vm.test = function() {
     console.log('Prompting for new topic');
   };
-  
+
   // This array for getting topings from the db.
   vm.topics = ['Lord of the Rings', 'Endless Space', 'Nature walks'];
+
+  // Get topics from the db.
+  vm.getTopics = function() {
+      console.log('Getting topics from the db');
+      $http.get('/topic').then(function(response){
+        console.log('Got response from topics GET:', response);
+      });
+  };
 
   // Create a dialogue prompt for creating a new topic.
   vm.showPrompt = function(ev) {
@@ -36,4 +44,6 @@ myApp.controller('SelectTopicController', function(IdeaShuffleService, $mdDialog
        console.log('Canceled creating a new topic');
      });
   };
+
+  vm.getTopics();
 });

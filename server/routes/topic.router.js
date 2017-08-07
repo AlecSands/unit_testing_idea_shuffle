@@ -4,6 +4,12 @@ var router = express.Router();
 // requires the topic schema.
 var Topic = require('../models/topic.js');
 
+// GET route for getting all topics from the db.
+router.get('/', function(req, res){
+  console.log('Getting topics from the db');
+  res.sendStatus(200);
+});
+
 // POST route to create a new topic.
 router.post('/create/:topic', function(req, res){
   var newTopic = {topic: req.params.topic};
