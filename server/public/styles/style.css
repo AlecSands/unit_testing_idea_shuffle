@@ -24,6 +24,10 @@ body, html {
   margin-top: 10px;
 }
 
+.container-controller {
+  padding-left: 50px;
+}
+
 .container p{
   margin-top : 14px;
 }
