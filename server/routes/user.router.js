@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
+var Users = require('../models/user.js');
+
 // Handles Ajax request for user information if user is authenticated
 router.get('/', function(req, res) {
   console.log('get /user route');
@@ -9,7 +11,8 @@ router.get('/', function(req, res) {
     // send back user object from database
     console.log('logged in', req.user);
     var userInfo = {
-      username : req.user.username
+      username : req.user.username,
+      currentTopic: req.user.currentTopic
     };
     res.send(userInfo);
   } else {
@@ -27,6 +30,38 @@ router.get('/logout', function(req, res) {
   req.logOut();
   res.sendStatus(200);
 });
+
+router.put('/currenttopic/:topic', function(req, res) {
+  var updatedCurrentTopic = {currentTopic: req.params.topic};
+  console.log(updatedCurrentTopic);
+  console.log(req.user._id);
+  var id = req.user._id;
+  Users.findByIdAndUpdate(id, updatedCurrentTopic, {new: true}, function(err, model) {
+    if (err) {
+      console.log('Error with mongoose PUT:', err);
+      res.sendStatus(500);
+    } else {
+      var updatedUser = {
+        username: model.username,
+        currentTopic: model.currentTopic
+      };
+      res.send(updatedUser);
+    }
+  });
+});
+
+//     var id = args._id;
+//     var updateObj = {updatedDate: Date.now()};
+//     _.extend(updateObj, args);
+//
+//     Model.findByIdAndUpdate(id, updateObj, function(err, model) {
+//         if (err) {
+//             logger.error(modelString +':edit' + modelString +' - ' + err.message);
+//             self.emit('item:failure', 'Failed to edit ' + modelString);
+//             return;
+//         }
+//         self.emit('item:success', model);
+//     });
 
 
 module.exports = router;

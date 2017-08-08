@@ -12,6 +12,7 @@ myApp.factory('IdeaShuffleService', function($http, $location){
           if(response.data.username) {
               // user has a curret session on the server
               userObject.userName = response.data.username;
+              userObject.currentTopic = response.data.currentTopic;
               console.log('IdeaShuffleService -- getuser -- User Data: ', userObject.userName);
           } else {
               console.log('IdeaShuffleService -- getuser -- failure');

@@ -1,4 +1,4 @@
-myApp.controller('SelectTopicController', function(IdeaShuffleService, $mdDialog, $http) {
+myApp.controller('SelectTopicController', function(IdeaShuffleService, $mdDialog, $http, $location) {
   console.log('SelectTopicController created');
   var vm = this;
   // Loads the service into the controller.
@@ -8,7 +8,7 @@ myApp.controller('SelectTopicController', function(IdeaShuffleService, $mdDialog
     console.log('Prompting for new topic');
   };
 
-  // This array for getting topings from the db.
+  // This array for getting topics from the db.
   vm.topics = {};
 
   // Get topics from the db.
@@ -45,6 +45,17 @@ myApp.controller('SelectTopicController', function(IdeaShuffleService, $mdDialog
        // This will run if the user clicks cancel.
        console.log('Canceled creating a new topic');
      });
+  };
+
+  // Update the current topic for the user in the database.
+  vm.selectTopic = function (topic) {
+    vm.userService.userObject.currentTopic = topic;
+    console.log('user current topic:', vm.userService.userObject.currentTopic);
+    $http.put('/user/currenttopic/' + vm.userService.userObject.currentTopic)
+      .then(function(response) {
+        console.log('Got response from current topic PUT route:', response);
+        $location.path("/currentTopic");
+      });
   };
 
   vm.getTopics();
