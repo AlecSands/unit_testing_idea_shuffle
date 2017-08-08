@@ -23,7 +23,7 @@ router.get('/', function(req, res){
 
 // POST route to create a new topic.
 router.post('/create/:topic', function(req, res){
-  var newTopic = {topic: req.params.topic};
+  var newTopic = {topic: req.params.topic, categories: [{category: 'Misc'}]};
   console.log('Creating a new topic:', newTopic.topic);
 
 
