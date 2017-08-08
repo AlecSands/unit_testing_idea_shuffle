@@ -1,4 +1,4 @@
-myApp.controller('CurrentTopicController', function(IdeaShuffleService, $http) {
+myApp.controller('CurrentTopicController', function(IdeaShuffleService, $http, $mdDialog) {
   console.log('CurrentTopicController created');
   var vm = this;
   vm.userService = IdeaShuffleService;
@@ -31,4 +31,31 @@ myApp.controller('CurrentTopicController', function(IdeaShuffleService, $http) {
   vm.categories2 = ['test with some stuff', 'testing', 'test with longer text for fun'];
 
   vm.getCurrentTopic();
+
+  // Create a dialogue prompt for adding a new category.
+  vm.showPrompt = function(ev) {
+     // Setup the properties for the prompt.
+     var confirm = $mdDialog.prompt()
+       .title('What is the new category?')
+       .placeholder('Category Name')
+       .ariaLabel('Category Name')
+       .initialValue('Category')
+       .targetEvent(ev)
+       .ok('Add')
+       .cancel('Cancel');
+
+     // How to respond to the users input to the prompt.
+     $mdDialog.show(confirm).then(function(result) {
+       // This will run if the user clicks create.
+       console.log('Creating a new category:', result);
+       // basic POST request to create a new topic.
+       $http.post('/topic/category/' + result).then(function(response){
+         console.log('Got response from new topic Post:', response);
+         vm.getCurrentTopic();
+       });
+     }, function() {
+       // This will run if the user clicks cancel.
+       console.log('Canceled creating a new topic');
+     });
+  };
 });

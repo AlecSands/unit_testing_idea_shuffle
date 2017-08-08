@@ -40,6 +40,42 @@ router.get('/categories/:topic', function(req, res){
   });
 });
 
+// POST route for getting all categores from the db for a topic.
+router.post('/category/:category', function(req, res){
+  console.log('Adding a category to the db');
+  var newCategory = req.params.category;
+  var currentTopic = req.user.currentTopic;
+  console.log('new topic:', newCategory);
+  console.log('current topic:', currentTopic);
+  // Mongoose request for all topics
+  addNewCategory(currentTopic, newCategory, res, req);
+});
+
+function addNewCategory(topicId, newCategory, res, req) {
+  Topic.findById({topic: topicId},
+    function(err, topic) {
+      if(err) {
+        console.log('err with new category:', err);
+        res.sendStatus(500);
+      } else {
+        var newCategory = {
+          category: newCategory,
+          ideas: [{idea: 'placeholder'}]
+        };
+        topic.categories.push(newCategory);
+        topic.save(function(err){
+          if(err) {
+            console.log('error with save:', err);
+            res.sendStatus(500);
+          } else {
+            console.log('success!');
+            res.sendStatus(200);
+          }
+        });
+      }
+  }); // end findOne
+}
+
 // POST route to create a new topic.
 router.post('/create/:topic', function(req, res){
   var newTopic = {topic: req.params.topic, categories: [{category: 'Uncategorized', ideas: [{idea: 'Placeholder'}]}]};
