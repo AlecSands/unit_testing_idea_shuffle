@@ -1,7 +1,18 @@
-myApp.controller('CurrentTopicController', function(IdeaShuffleService) {
+myApp.controller('CurrentTopicController', function(IdeaShuffleService, $http) {
   console.log('CurrentTopicController created');
   var vm = this;
   vm.userService = IdeaShuffleService;
+
+  vm.userService.getuser();
+
+  vm.getCurrentTopic = function() {
+    console.log(vm.userService.userObject.currentTopic);
+    $http.get('/topic/categories/' + vm.userService.userObject.currentTopic)
+      .then(function(response){
+        console.log('Got response from categories GET:', response);
+        vm.userService.currentTopicInfo = response;
+      });
+  };
 
   vm.dragControlListeners = {
     // accept: function (sourceItemHandleScope, destSortableScope) {return boolean;}, //override to determine drag is allowed or not. default is true.
@@ -18,4 +29,6 @@ myApp.controller('CurrentTopicController', function(IdeaShuffleService) {
 
   vm.categories1 = ['test1', 'test2', 'test with longer text'];
   vm.categories2 = ['test with some stuff', 'testing', 'test with longer text for fun'];
+
+  vm.getCurrentTopic();
 });

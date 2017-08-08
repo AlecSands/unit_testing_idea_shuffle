@@ -31,6 +31,8 @@ myApp.factory('IdeaShuffleService', function($http, $location){
         console.log('IdeaShuffleService -- logout -- logged out');
         $location.path("/home");
       });
-    }
+    },
+
+    currentTopicInfo: {}
   };
 });
