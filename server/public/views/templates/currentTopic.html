@@ -3,4 +3,18 @@
   <p>
     In Info
   </p>
+  <div id="drag-containment">
+    <h3>Category 1</h3>
+    <ul flex="50" as-sortable="ctc.dragControlListeners" ng-model="ctc.categories1">
+       <li as-sortable-item ng-repeat="item in ctc.categories1">
+          <div as-sortable-item-handle>{{item}}</div>
+       </li>
+    </ul>
+    <h3>Category 2</h3>
+    <ul flex="50" as-sortable="ctc.dragControlListeners" ng-model="ctc.categories2">
+       <li as-sortable-item ng-repeat="item in ctc.categories2">
+          <div as-sortable-item-handle>{{item}}</div>
+       </li>
+    </ul>
+</div>
 </div>
