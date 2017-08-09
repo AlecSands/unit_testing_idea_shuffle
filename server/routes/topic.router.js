@@ -175,6 +175,8 @@ function updateTopic(topic, updatedTopic, res, req) {
   }); // end findOne
 }
 
+
+//UNDER CONSTRUCTION
 router.delete('/:ideaId', function(req, res){
   console.log('Removing an idea from the db');
   var removeIdeaId = req.params.ideaId;

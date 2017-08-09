@@ -100,6 +100,8 @@ myApp.controller('CurrentTopicController', function(IdeaShuffleService, $http, $
      });
   };
 
+
+  // UNDER CONSTRUCTION
   vm.removeIdea = function(idea) {
     console.log('removing an idea:', idea);
     $http.delete('/topic/' + idea._id).then(function(response) {

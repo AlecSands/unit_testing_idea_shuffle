@@ -31,6 +31,15 @@ myApp.config(function($routeProvider, $locationProvider) {
         }
       }
     })
+    .when('/visuals', {
+      templateUrl: '/views/templates/visuals.html',
+      controller: 'VisualsController as vc',
+      resolve: {
+        getuser : function(IdeaShuffleService){
+          return IdeaShuffleService.getuser();
+        }
+      }
+    })
     .otherwise({
       redirectTo: 'home'
     });
