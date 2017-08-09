@@ -58,6 +58,16 @@ body, html {
   border-radius: 0px;
 }
 
+.md-button.md-icon-button {
+    margin: 0 0.6rem;
+    height: 4.8rem;
+    min-width: 0;
+    line-height: 4.8rem;
+    padding-left: 0;
+    padding-right: 0;
+    width: 4.8rem;
+}
+
 ul {
   list-style-type: none;
   margin: 0;

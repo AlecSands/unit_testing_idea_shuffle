@@ -14,6 +14,40 @@ myApp.controller('CurrentTopicController', function(IdeaShuffleService, $http, $
       });
   };
 
+  // Add a new idea to the current category
+  // This will trigger a prompt window where you can first confirm the category.
+  vm.addIdea = function(category) {
+    console.log('adding idea within', category);
+    // Create a dialogue prompt for adding a new idea.
+    vm.showIdeaPrompt = function(ev) {
+       // Setup the properties for the prompt.
+       var confirm = $mdDialog.prompt()
+         .title('Got a new idea?')
+         .placeholder('Idea Description')
+         .ariaLabel('Idea Description')
+         .initialValue('Idea')
+         .targetEvent(ev)
+         .ok('Add')
+         .cancel('Cancel');
+
+       // How to respond to the users input to the prompt.
+       $mdDialog.show(confirm).then(function(result) {
+         // This will run if the user clicks create.
+         console.log('Creating a new idea:', result);
+         // basic POST request to create a new topic.
+         $http.post('/topic/idea/' + result, category).then(function(response){
+           console.log('Got response from new topic Post:', response);
+           vm.getCurrentTopic();
+         });
+       }, function() {
+         // This will run if the user clicks cancel.
+         console.log('Canceled creating a new topic');
+       });
+    };
+
+    vm.showIdeaPrompt();
+  };
+
   vm.dragControlListeners = {
     // accept: function (sourceItemHandleScope, destSortableScope) {return boolean;}, //override to determine drag is allowed or not. default is true.
     itemMoved: function (event) {
