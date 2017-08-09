@@ -51,18 +51,15 @@ myApp.controller('CurrentTopicController', function(IdeaShuffleService, $http, $
   vm.dragControlListeners = {
     // accept: function (sourceItemHandleScope, destSortableScope) {return boolean;}, //override to determine drag is allowed or not. default is true.
     itemMoved: function (event) {
-      console.log('in item moved:', vm.categories1, vm.categories2);
+      console.log('in item moved:', vm.userService.currentTopicInfo);
     },
     orderChanged: function(event) {
-      console.log('changing order', vm.categories1, vm.categories2);
+      console.log('changing order', vm.userService.currentTopicInfo);
     },
     containment: '#drag-containment', //optional param.
     clone: false, //optional param for clone feature.
     allowDuplicates: true, //optional param allows duplicates to be dropped.
   };
-
-  vm.categories1 = ['test1', 'test2', 'test with longer text'];
-  vm.categories2 = ['test with some stuff', 'testing', 'test with longer text for fun'];
 
   vm.getCurrentTopic();
 

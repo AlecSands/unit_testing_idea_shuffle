@@ -8,7 +8,7 @@
           <md-icon md-svg-icon="vendors/svgicon/ic_add_circle_outline_black_24px.svg"></md-icon>
         </md-button>
       </h3>
-      <ul flex="50" as-sortable="ctc.dragControlListeners" ng-model="ctc.categories1">
+      <ul flex="50" as-sortable="ctc.dragControlListeners" ng-model="category.ideas">
          <li as-sortable-item ng-repeat="idea in category.ideas">
             <div as-sortable-item-handle>{{idea.idea}}</div>
          </li>
