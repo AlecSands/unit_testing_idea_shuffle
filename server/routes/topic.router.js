@@ -138,36 +138,42 @@ function addNewIdea(topic, category, newIdea, res, req) {
             console.log('sorry');
           }
         }
-        // var addCategory = {
-        //   category: newIdea,
-        //   ideas: [{idea: 'placeholder'}]
-        // };
-        // topic.categories.push(addCategory);
-        // topic.save(function(err){
-        //   if(err) {
-        //     console.log('error with save:', err);
-        //     res.sendStatus(500);
-        //   } else {
-        //     console.log('success!');
-        //     res.sendStatus(200);
-        //   }
-        // });
       }
   }); // end findOne
 }
 
-// Users.findByIdAndUpdate(currentCategory._id, updatedCurrentTopic, {new: true}, function(err, model) {
-//   if (err) {
-//     console.log('Error with mongoose PUT:', err);
-//     res.sendStatus(500);
-//   } else {
-//     var updatedUser = {
-//       username: model.username,
-//       currentTopic: model.currentTopic
-//     };
-//     res.send(updatedUser);
-//   }
-// });
+// PUT to update the ideas in a given topic.
+router.put('/idea', function(req, res){
+  console.log('Shuffling ideas in the db');
+  var currentTopic = req.user.currentTopic;
+  var updatedTopic = req.body.data;
+  console.log('current topic:', currentTopic);
+  console.log('updated topic:', updatedTopic);
+  // Mongoose request for all topics
+  updateTopic(currentTopic, updatedTopic, res, req);
+});
+
+function updateTopic(topic, updatedTopic, res, req) {
+  Topic.findOne({topic: topic},
+    function(err, data) {
+      if(err) {
+        console.log('err with new category:', err);
+        res.sendStatus(500);
+      } else {
+        console.log('This is the topic to edit:', data);
+        data.categories = updatedTopic.categories;
+        data.save(function(err){
+          if(err) {
+            console.log('error with save:', err);
+            res.sendStatus(500);
+          } else {
+            console.log('success!');
+            res.sendStatus(200);
+          }
+        });
+      }
+  }); // end findOne
+}
 
 
 module.exports = router;

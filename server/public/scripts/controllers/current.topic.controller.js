@@ -52,9 +52,15 @@ myApp.controller('CurrentTopicController', function(IdeaShuffleService, $http, $
     // accept: function (sourceItemHandleScope, destSortableScope) {return boolean;}, //override to determine drag is allowed or not. default is true.
     itemMoved: function (event) {
       console.log('in item moved:', vm.userService.currentTopicInfo);
+      topic = vm.userService.currentTopicInfo;
+      $http.put('/topic/idea/', topic).then(function(response){
+        console.log('Updating the database:', response);
+        vm.getCurrentTopic();
+      });
     },
     orderChanged: function(event) {
       console.log('changing order', vm.userService.currentTopicInfo);
+
     },
     containment: '#drag-containment', //optional param.
     clone: false, //optional param for clone feature.
