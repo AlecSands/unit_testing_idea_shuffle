@@ -3,45 +3,42 @@
 
     <h1 class="md-display-3">{{ctc.userService.userObject.currentTopic}}</h1>
     <div id="drag-containment">
-      <!-- <div ng-repeat="category in ctc.userService.currentTopicInfo.data.categories">
-        <h3>{{category.category}}
-          <md-button class="md-icon-button md-primary" aria-label="Add Idea" ng-click="ctc.addIdea(category)">
-            <md-icon md-svg-icon="vendors/svgicon/ic_add_circle_outline_black_24px.svg"></md-icon>
-          </md-button>
-        </h3>
-        <ul flex="50" as-sortable="ctc.dragControlListeners" ng-model="category.ideas">
-           <li as-sortable-item ng-repeat="idea in category.ideas">
-              <div as-sortable-item-handle>
-                <md-card>
-                  <md-card-content>{{idea.idea}}</md-card-content>
-                </md-card>
+      <md-content class="md-padding" layout="column">
+        <div class="">
+          <md-card flex="90" ng-repeat="category in ctc.userService.currentTopicInfo.data.categories">
+            <md-card-title>
+                <md-card-title-text>
+                  <span class="md-headline">{{category.category}}</span>
+                </md-card-title-text>
+                <md-button class="md-icon-button md-primary" aria-label="Add Idea" ng-click="ctc.addIdea(category)">
+                  <md-icon md-svg-icon="vendors/svgicon/ic_add_circle_outline_black_24px.svg"></md-icon>
+                </md-button>
+            </md-card-title>
+            <div as-sortable="ctc.dragControlListeners" ng-model="category.ideas">
+              <div class="" ng-repeat="idea in category.ideas">
+                <md-card-content layout="row" layout-align="space-between" as-sortable-item>
+                  <div class="" flex="80" >
+                    <p as-sortable-item-handle>
+                      {{idea.idea}}
+                    </p>
+                  </div>
+                  <md-card-actions layout="row">
+                    <md-button class="md-icon-button md-primary" aria-label="Modify Idea" ng-click="ctc.addIdea(idea)">
+                      <md-icon md-svg-icon="vendors/svgicon/ic_remove_circle_outline_black_24px.svg"></md-icon>
+                    </md-button>
+                    <md-button class="md-icon-button md-primary" aria-label="Delete Idea" ng-click="ctc.removeIdea(idea)">
+                      <md-icon md-svg-icon="vendors/svgicon/ic_clear_black_24px.svg"></md-icon>
+                    </md-button>
+                  </md-card-actions>
+                </md-card-content>
               </div>
-           </li>
-        </ul>
-      </div> -->
-      <md-content class="md-padding" layout-xs="column" layout="row">
-        <md-card flex="50" ng-repeat="category in ctc.userService.currentTopicInfo.data.categories">
-          <md-card-title>
-              <md-card-title-text>
-                <span class="md-headline">{{category.category}}</span>
-              </md-card-title-text>
-              <md-button class="md-icon-button md-primary" aria-label="Add Idea" ng-click="ctc.addIdea(category)">
-                <md-icon md-svg-icon="vendors/svgicon/ic_add_circle_outline_black_24px.svg"></md-icon>
-              </md-button>
-          </md-card-title>
-          <div as-sortable="ctc.dragControlListeners" ng-model="category.ideas">
-            <md-card-content as-sortable-item ng-repeat="idea in category.ideas">
-              <p as-sortable-item-handle>
-                {{idea.idea}}
-              </p>
-            </md-card-content>
-          </div>
-        </md-card>
+            </div>
+          </md-card>
+        </div>
       </md-content>
     </div>
     <br>
     <md-button class="md-primary md-raised" ng-click="ctc.showPrompt(stc.test())"  >
       Add New Category
     </md-button>
-
 </div>

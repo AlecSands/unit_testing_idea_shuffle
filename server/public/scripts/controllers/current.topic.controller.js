@@ -60,7 +60,11 @@ myApp.controller('CurrentTopicController', function(IdeaShuffleService, $http, $
     },
     orderChanged: function(event) {
       console.log('changing order', vm.userService.currentTopicInfo);
-
+      topic = vm.userService.currentTopicInfo;
+      $http.put('/topic/idea/', topic).then(function(response){
+        console.log('Updating the database:', response);
+        vm.getCurrentTopic();
+      });
     },
     containment: '#drag-containment', //optional param.
     clone: false, //optional param for clone feature.
@@ -94,5 +98,13 @@ myApp.controller('CurrentTopicController', function(IdeaShuffleService, $http, $
        // This will run if the user clicks cancel.
        console.log('Canceled creating a new topic');
      });
+  };
+
+  vm.removeIdea = function(idea) {
+    console.log('removing an idea:', idea);
+    $http.delete('/topic/' + idea._id).then(function(response) {
+      console.log('got a response on the delete route:', response);
+      vm.getCurrentTopic();
+    });
   };
 });

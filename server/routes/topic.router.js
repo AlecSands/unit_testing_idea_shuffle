@@ -175,5 +175,34 @@ function updateTopic(topic, updatedTopic, res, req) {
   }); // end findOne
 }
 
+router.delete('/:ideaId', function(req, res){
+  console.log('Removing an idea from the db');
+  var removeIdeaId = req.params.ideaId;
+  console.log('idea to remove:', removeIdeaId);
+  // Mongoose request for all topics
+  // EntryPoints.update(
+  //   { "onCommands._id": req.body._id },
+  //   {
+  //       "$pull": {
+  //           "onCommands": { "_id": req.body._id }
+  //       }
+  //   },
+  //   function (err, numAffected) { console.log("data:", numAffected) }
+  // );
+
+  Topic.update({topic: req.user.currentTopic}, {"$pull": {
+    ideas: {"_id": removeIdeaId}
+  }})
+    .then(function(err, data) {
+      if(err) {
+        console.log('err with new category:', err);
+        res.sendStatus(500);
+      } else {
+        console.log('success!');
+        res.sendStatus(200);
+      }
+  });
+});
+
 
 module.exports = router;
