@@ -43,13 +43,16 @@ router.post('/create/:topic', function(req, res){
 // CATEGORY ROUTES
 // GET route for getting all categores from the db for a topic.
 router.get('/categories/:topic', function(req, res){
+  console.log('getting current topic');
   var topic = req.params.topic;
   // Mongoose request for the current topic
   Topic.findOne({topic: topic}, function(err, result) {
+    console.log('Mongoose Finding');
     if(err) {
       console.log('find error: ', err);
       res.sendStatus(500);
     } else {
+      console.log('about to send the result', result);
       res.send(result);
     }
   });
@@ -91,6 +94,42 @@ function addNewCategory(topicId, newCategory, res, req) {
       }
     });
   }
+
+  // Modify a category in the db
+  router.put('/category/:modCategory', function(req, res) {
+    var modifiedCategory = req.params.modCategory;
+    var currentTopic = req.user.currentTopic;
+    var currentCategory = req.body;
+    console.log('current category to be modified:', currentCategory);
+
+    Topic.findOne({topic: currentTopic},
+      function(err, data) {
+        if(err) {
+          console.log('Unable to find topic:', err);
+          res.sendStatus(500);
+        } else {
+          console.log('Data retrieved from the db', data);
+          // Loop through all the categories in the topic.
+          for (i=0; i<data.categories.length; i++) {
+              // Checks if the current category matches the target category
+              if (data.categories[i]._id == currentCategory._id) {
+                data.categories[i].category = modifiedCategory;
+              }
+            }
+          }
+          console.log('updated topic:', JSON.stringify(data));
+          // Save the updated topic to the db.
+          data.save(function(err){
+            if(err) {
+              console.log('error with save:', err);
+              res.sendStatus(500);
+            } else {
+              res.sendStatus(200);
+            }
+          });
+      
+  });
+});
 
   // IDEAS ROUTES
   // POST to create a new idea for the given category.
@@ -163,7 +202,7 @@ function addNewCategory(topicId, newCategory, res, req) {
       }
 
 
-      //UNDER CONSTRUCTION
+      // delete an idea in the database.
       router.delete('/:ideaId', function(req, res){
         console.log('Removing an idea from the db');
         var removeIdeaId = req.params.ideaId;
@@ -204,7 +243,43 @@ function addNewCategory(topicId, newCategory, res, req) {
               });
             }
           }); // end findOne
-      });
+        });
 
+        router.put('/idea/:modIdea', function(req, res) {
+          var modifiedIdea = req.params.modIdea;
+          var currentTopic = req.user.currentTopic;
+          var currentIdea = req.body;
+          console.log('current idea to be modified:', currentIdea);
 
-      module.exports = router;
+          Topic.findOne({topic: currentTopic},
+            function(err, data) {
+              if(err) {
+                console.log('Unable to find topic:', err);
+                res.sendStatus(500);
+              } else {
+                console.log('Data retrieved from the db', data);
+                // Loop through all the categories in the topic.
+                for (i=0; i<data.categories.length; i++) {
+                  // Loop through all the ideas in each category.
+                  for (j=0; j<data.categories[i].ideas.length; j++) {
+                    // Checks if the current idea matches the target idea
+                    if (data.categories[i].ideas[j]._id == currentIdea._id) {
+                      data.categories[i].ideas[j].idea = modifiedIdea;
+                    }
+                  }
+                }
+                console.log('updated topic:', JSON.stringify(data));
+                // Save the updated topic to the db.
+                data.save(function(err){
+                  if(err) {
+                    console.log('error with save:', err);
+                    res.sendStatus(500);
+                  } else {
+                    res.sendStatus(200);
+                  }
+                });
+            }
+        });
+});
+
+        module.exports = router;

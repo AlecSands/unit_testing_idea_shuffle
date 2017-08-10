@@ -1,44 +1,50 @@
 <div ng-include="'views/partials/nav.html'"></div>
 <div class="container-controller">
 
-    <h1 class="md-display-3">{{ctc.userService.userObject.currentTopic}}</h1>
-    <div id="drag-containment">
-      <md-content class="md-padding" layout="column">
-        <div class="">
-          <md-card flex="90" ng-repeat="category in ctc.userService.currentTopicInfo.data.categories">
-            <md-card-title>
-                <md-card-title-text>
-                  <span class="md-headline">{{category.category}}</span>
-                </md-card-title-text>
-                <md-button class="md-icon-button md-primary" aria-label="Add Idea" ng-click="ctc.addIdea(category)">
-                  <md-icon md-svg-icon="vendors/svgicon/ic_add_circle_outline_black_24px.svg"></md-icon>
-                </md-button>
-            </md-card-title>
-            <div class="idea" as-sortable="ctc.dragControlListeners" ng-model="category.ideas">
-              <div class="" ng-repeat="idea in category.ideas">
-                <md-card-content layout="row" layout-align="space-between" as-sortable-item>
-                  <div as-sortable-item-handle class="" flex="80" >
-                    <p>
-                      {{idea.idea}}
-                    </p>
-                  </div>
-                  <md-card-actions layout="row">
-                    <md-button class="md-icon-button md-primary" aria-label="Modify Idea" ng-click="ctc.addIdea(idea)">
-                      <md-icon md-svg-icon="vendors/svgicon/ic_remove_circle_outline_black_24px.svg"></md-icon>
-                    </md-button>
-                    <md-button class="md-icon-button md-primary" aria-label="Delete Idea" ng-click="ctc.removeIdea(idea)">
-                      <md-icon md-svg-icon="vendors/svgicon/ic_clear_black_24px.svg"></md-icon>
-                    </md-button>
-                  </md-card-actions>
-                </md-card-content>
-              </div>
+  <h1 class="md-display-3">{{ctc.userService.userObject.currentTopic}}</h1>
+  <div id="drag-containment">
+    <md-content class="md-padding" layout="column">
+      <div class="">
+        <md-card flex="90" ng-repeat="category in ctc.userService.currentTopicInfo.data.categories">
+          <md-card-title>
+            <md-card-title-text>
+              <span class="md-headline">{{category.category}}</span>
+            </md-card-title-text>
+            <md-button class="md-icon-button md-primary" aria-label="Add Idea" ng-click="ctc.addIdea(category)">
+              <md-icon md-svg-icon="vendors/svgicon/ic_add_black_24px.svg"></md-icon>
+            </md-button>
+            <md-button class="md-icon-button md-primary" aria-label="Modify Category" ng-click="ctc.showModifyCategoryPrompt(category)">
+              <md-icon md-svg-icon="vendors/svgicon/ic_remove_black_24px.svg"></md-icon>
+            </md-button>
+            <md-button class="md-icon-button md-primary" aria-label="Remove Idea" ng-click="ctc.removeIdea(idea)">
+              <md-icon md-svg-icon="vendors/svgicon/ic_clear_black_24px.svg"></md-icon>
+            </md-button>
+          </md-card-title>
+          <div class="idea" as-sortable="ctc.dragControlListeners" ng-model="category.ideas">
+            <div class="" ng-repeat="idea in category.ideas">
+              <md-card-content layout="row" layout-align="space-between" as-sortable-item>
+                <div as-sortable-item-handle class="" flex="80" >
+                  <p>
+                    {{idea.idea}}
+                  </p>
+                </div>
+                <md-card-actions layout="row">
+                  <md-button class="md-icon-button md-primary" aria-label="Modify Idea" ng-click="ctc.showModifyIdeaPrompt(idea)">
+                    <md-icon md-svg-icon="vendors/svgicon/ic_remove_circle_outline_black_24px.svg"></md-icon>
+                  </md-button>
+                  <md-button class="md-icon-button md-primary" aria-label="Remove Idea" ng-click="ctc.removeIdea(idea)">
+                    <md-icon md-svg-icon="vendors/svgicon/ic_highlight_off_black_24px.svg"></md-icon>
+                  </md-button>
+                </md-card-actions>
+              </md-card-content>
             </div>
-          </md-card>
-        </div>
-      </md-content>
-    </div>
-    <br>
-    <md-button class="md-primary md-raised" ng-click="ctc.showPrompt(stc.test())"  >
-      Add New Category
-    </md-button>
+          </div>
+        </md-card>
+      </div>
+    </md-content>
+  </div>
+  <br>
+  <md-button class="md-primary md-raised" ng-click="ctc.showPrompt(stc.test())"  >
+    Add New Category
+  </md-button>
 </div>

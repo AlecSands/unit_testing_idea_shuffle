@@ -100,12 +100,63 @@ myApp.controller('CurrentTopicController', function(IdeaShuffleService, $http, $
   };
 
 
-  // UNDER CONSTRUCTION
+  // Removes an idea from the db.
   vm.removeIdea = function(idea) {
-    console.log('removing an idea:', idea);
     $http.delete('/topic/' + idea._id).then(function(response) {
       console.log('got a response on the delete route:', response);
       vm.getCurrentTopic();
     });
+  };
+
+  // Create a dialogue prompt for modifying an idea.
+  vm.showModifyIdeaPrompt = function(currentIdea) {
+     // Setup the properties for the prompt.
+     var confirm = $mdDialog.prompt()
+       .title('What would you like to change?')
+       .initialValue(currentIdea.idea)
+       .ariaLabel('Idea Description')
+       .targetEvent(currentIdea)
+       .ok('Update')
+       .cancel('Cancel');
+
+     // How to respond to the users input to the prompt.
+     $mdDialog.show(confirm).then(function(result) {
+       // This will run if the user clicks create.
+       console.log('Updating an idea:', result);
+       // basic POST request to create a new topic.
+       $http.put('/topic/idea/' + result, currentIdea).then(function(response){
+         console.log('Got response from new topic Post:', response);
+         vm.getCurrentTopic();
+       });
+     }, function() {
+       // This will run if the user clicks cancel.
+       console.log('Canceled creating a new topic');
+     });
+  };
+
+  // Create a dialogue prompt for modifying a category.
+  vm.showModifyCategoryPrompt = function(currentCategory) {
+     // Setup the properties for the prompt.
+     var confirm = $mdDialog.prompt()
+       .title('What would you like to change?')
+       .initialValue(currentCategory.category)
+       .ariaLabel('Idea Description')
+       .targetEvent(currentCategory)
+       .ok('Update')
+       .cancel('Cancel');
+
+     // How to respond to the users input to the prompt.
+     $mdDialog.show(confirm).then(function(result) {
+       // This will run if the user clicks create.
+       console.log('Updating an idea:', result);
+       // basic POST request to create a new topic.
+       $http.put('/topic/category/' + result, currentCategory).then(function(response){
+         console.log('Got response from update category PUT:', response);
+         vm.getCurrentTopic();
+       });
+     }, function() {
+       // This will run if the user clicks cancel.
+       console.log('Canceled creating a new topic');
+     });
   };
 });
