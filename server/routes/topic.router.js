@@ -83,7 +83,7 @@ function addNewCategory(topicId, newCategory, res, req) {
       } else {
         var addCategory = {
           category: newCategory,
-          ideas: [{idea: 'placeholder'}]
+          ideas: []
         };
         topic.categories.push(addCategory);
         topic.save(function(err){

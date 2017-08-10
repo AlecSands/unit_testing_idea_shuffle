@@ -4,7 +4,7 @@ var router = express.Router();
 // requires the topic schema.
 var Topic = require('../models/topic.js');
 
-
+//D3
 // Will send d3 compatable data.
 router.get('/:topic', function(req, res) {
   console.log('Request for d3 recieved.');
@@ -46,33 +46,26 @@ router.get('/:topic', function(req, res) {
     }
   });
 
-  // var exampleD3 = {
-  //   "nodes": [
-  //     {"id": "Alec", "group": 1},
-  //     {"id": "Pam", "group": 1},
-  //     {"id": "Mary", "group": 2},
-  //     {"id": "Scott", "group": 2},
-  //     {"id": "Andrea", "group": 4},
-  //     {"id": "Zach", "group": 3},
-  //     {"id": "Walter", "group": 3},
-  //     {"id": "Howard", "group": 3}
-  //   ],
-  //   "links": [
-  //     {"source": "Alec", "target": "Pam", "value": 1},
-  //     {"source": "Alec", "target": "Mary", "value": 1},
-  //     {"source": "Alec", "target": "Scott", "value": 1},
-  //     {"source": "Alec", "target": "Walter", "value": 1},
-  //     {"source": "Alec", "target": "Howard", "value": 1},
-  //     {"source": "Alec", "target": "Zach", "value": 1},
-  //     {"source": "Mary", "target": "Scott", "value": 1},
-  //     {"source": "Howard", "target": "Zach", "value": 1},
-  //     {"source": "Walter", "target": "Zach", "value": 1},
-  //     {"source": "Walter", "target": "Howard", "value": 1},
-  //     {"source": "Pam", "target": "Andrea", "value": 1}
-  //   ]
-  // };
-
 });
+
+// Watson
+
+// var ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
+//
+// var tone_analyzer = new ToneAnalyzerV3({
+//   "url": "https://gateway.watsonplatform.net/tone-analyzer/api",
+//   "username": "288f2ed6-0c43-41ad-b4f5-f7a546c145c2",
+//   "password": "EKwe43kJF11z",
+//   version_date: '2016-05-19'
+// });
+//
+// tone_analyzer.tone({ text: 'I am thinking that hiding ducks around Prime is really fun.' },
+//   function(err, tone) {
+//     if (err)
+//       console.log(err);
+//     else
+//       console.log(JSON.stringify(tone, null, 2));
+// });
 
 
 module.exports = router;

@@ -25,7 +25,6 @@ myApp.controller('CurrentTopicController', function(IdeaShuffleService, $http, $
          .title('Got a new idea?')
          .placeholder('Idea Description')
          .ariaLabel('Idea Description')
-         .initialValue('Idea')
          .targetEvent(ev)
          .ok('Add')
          .cancel('Cancel');

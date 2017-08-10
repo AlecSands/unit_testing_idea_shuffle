@@ -4,35 +4,10 @@ myApp.controller('VisualsController', function(IdeaShuffleService, $http, $mdDia
   vm.userService = IdeaShuffleService;
   vm.userService.getuser();
 
-  var exampleD3 = {
-    "nodes": [
-      {"id": "Alec", "group": 1},
-      {"id": "Pam", "group": 1},
-      {"id": "Mary", "group": 2},
-      {"id": "Scott", "group": 2},
-      {"id": "Andrea", "group": 4},
-      {"id": "Zach", "group": 3},
-      {"id": "Walter", "group": 3},
-      {"id": "Howard", "group": 3}
-    ],
-    "links": [
-      {"source": "Alec", "target": "Pam", "value": 1},
-      {"source": "Alec", "target": "Mary", "value": 1},
-      {"source": "Alec", "target": "Scott", "value": 1},
-      {"source": "Alec", "target": "Walter", "value": 1},
-      {"source": "Alec", "target": "Howard", "value": 1},
-      {"source": "Alec", "target": "Zach", "value": 1},
-      {"source": "Mary", "target": "Scott", "value": 1},
-      {"source": "Howard", "target": "Zach", "value": 1},
-      {"source": "Walter", "target": "Zach", "value": 1},
-      {"source": "Walter", "target": "Howard", "value": 1},
-      {"source": "Pam", "target": "Andrea", "value": 1}
-    ]
-  };
-
+  // D3
   vm.refreshGraph = function() {
       var width = window.innerWidth;
-      var height = 400;
+      var height = 600;
 
       // Selects the svg element on the DOM and stores it in a variable
       var svg = d3.select("#canvasContainer").append("svg").attr("width", width).attr("height", height);
@@ -45,7 +20,7 @@ myApp.controller('VisualsController', function(IdeaShuffleService, $http, $mdDia
           //
           .force("link", d3.forceLink().id(function(d) { return d.id; }))
           // Sets the strength of the force which pushes dots apart
-          .force("charge", d3.forceManyBody().strength(-250))
+          .force("charge", d3.forceManyBody().strength(-100))
           // Sets the center of gravity for the graph
           .force("center", d3.forceCenter(width / 2, height / 2));
 
