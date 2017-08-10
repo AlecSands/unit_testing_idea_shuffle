@@ -1,47 +1,57 @@
 var express = require('express');
 var router = express.Router();
 
-// requires the topic schema.
+// Require Schemas.
 var Topic = require('../models/topic.js');
 
-//D3
-// Will send d3 compatable data.
+// D3 Related Routes
+// Get route which converts topic to d3 compatable JSON.
 router.get('/:topic', function(req, res) {
-  console.log('Request for d3 recieved.');
-
   var topic = req.params.topic;
-  console.log('The current Topic:', topic);
 
-  // Mongoose request for all topics
+  // Mongoose request for the current topic
   Topic.findOne({topic: topic}, function(err, result) {
     if(err) {
       console.log('find error: ', err);
       res.sendStatus(500);
     } else {
       var thisTopic = result;
-      console.log('got the topic:', thisTopic);
-
       // converting to d3
+      // Instantiating the d3 JSON object with the current topic.
       var topicD3 = {
         "nodes": [
           {"id": thisTopic.topic, "group": 1},
         ],
-        "links": [
-          // {"source": thisTopic.topic, "target": "testing", "value": 1}
-        ]
+        "links": []
       };
-
+      // Loop through all the categories in the current topic.
       for (i=0; i<thisTopic.categories.length; i++) {
-        topicD3.nodes.push({"id": thisTopic.categories[i].category, "group": 2});
-        topicD3.links.push({"source": thisTopic.topic, "target": thisTopic.categories[i].category, "value": 1});
+        // Adding nodes for each category
+        topicD3.nodes.push({
+          "id": thisTopic.categories[i].category,
+          "group": 2
+        });
+        // Adding links between the categories and the topic
+        topicD3.links.push({
+          "source": thisTopic.topic,
+          "target": thisTopic.categories[i].category,
+          "value": 1
+        });
+        // Looping through each idea in category[i]
         for (j=0; j<thisTopic.categories[i].ideas.length; j++) {
-          topicD3.nodes.push({"id": thisTopic.categories[i].ideas[j].idea, "group": 3});
-          topicD3.links.push({"source": thisTopic.categories[i].category, "target": thisTopic.categories[i].ideas[j].idea, "value": 1});
+          // Adding a new node for each idea.
+          topicD3.nodes.push({
+            "id": thisTopic.categories[i].ideas[j].idea,
+            "group": 3
+          });
+          // Adding a link between the idea node and the category node.
+          topicD3.links.push({
+            "source": thisTopic.categories[i].category,
+            "target": thisTopic.categories[i].ideas[j].idea,
+            "value": 1
+          });
         }
       }
-
-      console.log('updated d3:', topicD3);
-
       res.send(topicD3);
     }
   });
