@@ -167,30 +167,43 @@ function addNewCategory(topicId, newCategory, res, req) {
       router.delete('/:ideaId', function(req, res){
         console.log('Removing an idea from the db');
         var removeIdeaId = req.params.ideaId;
+        var currentTopic = req.user.currentTopic;
         console.log('idea to remove:', removeIdeaId);
-        // Mongoose request for all topics
-        // EntryPoints.update(
-        //   { "onCommands._id": req.body._id },
-        //   {
-        //       "$pull": {
-        //           "onCommands": { "_id": req.body._id }
-        //       }
-        //   },
-        //   function (err, numAffected) { console.log("data:", numAffected) }
-        // );
 
-        Topic.update({topic: req.user.currentTopic}, {"$pull": {
-          ideas: {"_id": removeIdeaId}
-        }})
-        .then(function(err, data) {
-          if(err) {
-            console.log('err with new category:', err);
-            res.sendStatus(500);
-          } else {
-            console.log('success!');
-            res.sendStatus(200);
-          }
-        });
+        Topic.findOne({topic: currentTopic},
+          function(err, data) {
+            if(err) {
+              console.log('Unable to find topic:', err);
+              res.sendStatus(500);
+            } else {
+              console.log('Data retrieved from the db', data);
+              // Loop through all the categories in the topic.
+              for (i=0; i<data.categories.length; i++) {
+                var ideaToRemove = -1;
+                // Loop through all the ideas in each category.
+                for (j=0; j<data.categories[i].ideas.length; j++) {
+                  // Checks if the current idea matches the target idea
+                  if (data.categories[i].ideas[j]._id == removeIdeaId) {
+                    ideaToRemove = j;
+                  }
+                }
+                // if there was a match remove it from the array.
+                if (ideaToRemove >= 0) {
+                  data.categories[i].ideas.splice(ideaToRemove, 1);
+                }
+              }
+              console.log('updated topic:', JSON.stringify(data));
+              // Save the updated topic to the db.
+              data.save(function(err){
+                if(err) {
+                  console.log('error with save:', err);
+                  res.sendStatus(500);
+                } else {
+                  res.sendStatus(200);
+                }
+              });
+            }
+          }); // end findOne
       });
 
 

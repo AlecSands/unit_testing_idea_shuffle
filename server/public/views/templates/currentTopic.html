@@ -14,11 +14,11 @@
                   <md-icon md-svg-icon="vendors/svgicon/ic_add_circle_outline_black_24px.svg"></md-icon>
                 </md-button>
             </md-card-title>
-            <div as-sortable="ctc.dragControlListeners" ng-model="category.ideas">
+            <div class="idea" as-sortable="ctc.dragControlListeners" ng-model="category.ideas">
               <div class="" ng-repeat="idea in category.ideas">
                 <md-card-content layout="row" layout-align="space-between" as-sortable-item>
-                  <div class="" flex="80" >
-                    <p as-sortable-item-handle>
+                  <div as-sortable-item-handle class="" flex="80" >
+                    <p>
                       {{idea.idea}}
                     </p>
                   </div>
