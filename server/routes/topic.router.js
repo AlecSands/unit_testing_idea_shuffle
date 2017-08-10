@@ -111,83 +111,53 @@ function addNewCategory(topicId, newCategory, res, req) {
           console.log('Data retrieved from the db', data);
           // Loop through all the categories in the topic.
           for (i=0; i<data.categories.length; i++) {
-              // Checks if the current category matches the target category
-              if (data.categories[i]._id == currentCategory._id) {
-                data.categories[i].category = modifiedCategory;
-              }
-            }
-          }
-          console.log('updated topic:', JSON.stringify(data));
-          // Save the updated topic to the db.
-          data.save(function(err){
-            if(err) {
-              console.log('error with save:', err);
-              res.sendStatus(500);
-            } else {
-              res.sendStatus(200);
-            }
-          });
-      
-  });
-});
-
-  // IDEAS ROUTES
-  // POST to create a new idea for the given category.
-  router.post('/idea/:idea', function(req, res){
-    var newIdea = req.params.idea;
-    var currentTopic = req.user.currentTopic;
-    var currentCategory = req.body;
-    // Add a new idea to the current category.
-    addNewIdea(currentTopic, currentCategory, newIdea, res, req);
-  });
-
-  // Add a new idea to the current category.
-  function addNewIdea(topic, category, newIdea, res, req) {
-    Topic.findOne({topic: topic},
-      function(err, topic) {
-        if(err) {
-          console.log('err with new category:', err);
-          res.sendStatus(500);
-        } else {
-          // Loop through the categories to find amatch with the current category.
-          for (i=0; i<topic.categories.length; i++) {
-            if (topic.categories[i]._id == category._id) {
-              // Once there is a match push the new idea into the array.
-              topic.categories[i].ideas.push({idea: newIdea});
-              // Save the updated topic to the database.
-              // In the future put the anonymous function into a callback.
-              topic.save(function(err){
-                if(err) {
-                  console.log('error with save:', err);
-                  res.sendStatus(500);
-                } else {
-                  res.sendStatus(200);
-                }
-              });
+            // Checks if the current category matches the target category
+            if (data.categories[i]._id == currentCategory._id) {
+              data.categories[i].category = modifiedCategory;
             }
           }
         }
-      }); // end findOne
-    }
-
-    // PUT to update the ideas in a given topic.
-    router.put('/idea', function(req, res){
-      var currentTopic = req.user.currentTopic;
-      var updatedTopic = req.body.data;
-      // Update the current topic in the db.
-      updateTopic(currentTopic, updatedTopic, res, req);
-    });
-
-    // Updates the current topic in the db to reflect the new order.
-    function updateTopic(topic, updatedTopic, res, req) {
-      // Find the current topic in the db.
-      Topic.findOne({topic: topic},
-        function(err, data) {
+        console.log('updated topic:', JSON.stringify(data));
+        // Save the updated topic to the db.
+        data.save(function(err){
           if(err) {
-            console.log('err with new category:', err);
+            console.log('error with save:', err);
             res.sendStatus(500);
           } else {
-            data.categories = updatedTopic.categories;
+            res.sendStatus(200);
+          }
+        });
+
+      });
+    });
+
+    // delete a category in the database.
+    router.delete('/category/:categoryId', function(req, res){
+      console.log('Removing a category from the db');
+      var removeCategoryId = req.params.categoryId;
+      var currentTopic = req.user.currentTopic;
+      console.log('category to remove:', removeCategoryId);
+
+      Topic.findOne({topic: currentTopic},
+        function(err, data) {
+          if(err) {
+            console.log('Unable to find topic:', err);
+            res.sendStatus(500);
+          } else {
+            console.log('Data retrieved from the db', data);
+            // Loop through all the categories in the topic.
+            for (i=0; i<data.categories.length; i++) {
+              var categoryToRemove = -1;
+              // Checks if the current idea matches the target idea
+              if (data.categories[i]._id == removeCategoryId) {
+                categoryToRemove = i;
+              }
+              // if there was a match remove it from the array.
+              if (categoryToRemove >= 0) {
+                data.categories.splice(categoryToRemove, 1);
+              }
+            }
+            console.log('updated topic:', JSON.stringify(data));
             // Save the updated topic to the db.
             data.save(function(err){
               if(err) {
@@ -199,39 +169,65 @@ function addNewCategory(topicId, newCategory, res, req) {
             });
           }
         }); // end findOne
+      });
+
+    // IDEAS ROUTES
+    // POST to create a new idea for the given category.
+    router.post('/idea/:idea', function(req, res){
+      var newIdea = req.params.idea;
+      var currentTopic = req.user.currentTopic;
+      var currentCategory = req.body;
+      // Add a new idea to the current category.
+      addNewIdea(currentTopic, currentCategory, newIdea, res, req);
+    });
+
+    // Add a new idea to the current category.
+    function addNewIdea(topic, category, newIdea, res, req) {
+      Topic.findOne({topic: topic},
+        function(err, topic) {
+          if(err) {
+            console.log('err with new category:', err);
+            res.sendStatus(500);
+          } else {
+            // Loop through the categories to find amatch with the current category.
+            for (i=0; i<topic.categories.length; i++) {
+              if (topic.categories[i]._id == category._id) {
+                // Once there is a match push the new idea into the array.
+                topic.categories[i].ideas.push({idea: newIdea});
+                // Save the updated topic to the database.
+                // In the future put the anonymous function into a callback.
+                topic.save(function(err){
+                  if(err) {
+                    console.log('error with save:', err);
+                    res.sendStatus(500);
+                  } else {
+                    res.sendStatus(200);
+                  }
+                });
+              }
+            }
+          }
+        }); // end findOne
       }
 
-
-      // delete an idea in the database.
-      router.delete('/:ideaId', function(req, res){
-        console.log('Removing an idea from the db');
-        var removeIdeaId = req.params.ideaId;
+      // PUT to update the ideas in a given topic.
+      router.put('/idea', function(req, res){
         var currentTopic = req.user.currentTopic;
-        console.log('idea to remove:', removeIdeaId);
+        var updatedTopic = req.body.data;
+        // Update the current topic in the db.
+        updateTopic(currentTopic, updatedTopic, res, req);
+      });
 
-        Topic.findOne({topic: currentTopic},
+      // Updates the current topic in the db to reflect the new order.
+      function updateTopic(topic, updatedTopic, res, req) {
+        // Find the current topic in the db.
+        Topic.findOne({topic: topic},
           function(err, data) {
             if(err) {
-              console.log('Unable to find topic:', err);
+              console.log('err with new category:', err);
               res.sendStatus(500);
             } else {
-              console.log('Data retrieved from the db', data);
-              // Loop through all the categories in the topic.
-              for (i=0; i<data.categories.length; i++) {
-                var ideaToRemove = -1;
-                // Loop through all the ideas in each category.
-                for (j=0; j<data.categories[i].ideas.length; j++) {
-                  // Checks if the current idea matches the target idea
-                  if (data.categories[i].ideas[j]._id == removeIdeaId) {
-                    ideaToRemove = j;
-                  }
-                }
-                // if there was a match remove it from the array.
-                if (ideaToRemove >= 0) {
-                  data.categories[i].ideas.splice(ideaToRemove, 1);
-                }
-              }
-              console.log('updated topic:', JSON.stringify(data));
+              data.categories = updatedTopic.categories;
               // Save the updated topic to the db.
               data.save(function(err){
                 if(err) {
@@ -243,13 +239,15 @@ function addNewCategory(topicId, newCategory, res, req) {
               });
             }
           }); // end findOne
-        });
+        }
 
-        router.put('/idea/:modIdea', function(req, res) {
-          var modifiedIdea = req.params.modIdea;
+
+        // delete an idea in the database.
+        router.delete('/:ideaId', function(req, res){
+          console.log('Removing an idea from the db');
+          var removeIdeaId = req.params.ideaId;
           var currentTopic = req.user.currentTopic;
-          var currentIdea = req.body;
-          console.log('current idea to be modified:', currentIdea);
+          console.log('idea to remove:', removeIdeaId);
 
           Topic.findOne({topic: currentTopic},
             function(err, data) {
@@ -260,12 +258,17 @@ function addNewCategory(topicId, newCategory, res, req) {
                 console.log('Data retrieved from the db', data);
                 // Loop through all the categories in the topic.
                 for (i=0; i<data.categories.length; i++) {
+                  var ideaToRemove = -1;
                   // Loop through all the ideas in each category.
                   for (j=0; j<data.categories[i].ideas.length; j++) {
                     // Checks if the current idea matches the target idea
-                    if (data.categories[i].ideas[j]._id == currentIdea._id) {
-                      data.categories[i].ideas[j].idea = modifiedIdea;
+                    if (data.categories[i].ideas[j]._id == removeIdeaId) {
+                      ideaToRemove = j;
                     }
+                  }
+                  // if there was a match remove it from the array.
+                  if (ideaToRemove >= 0) {
+                    data.categories[i].ideas.splice(ideaToRemove, 1);
                   }
                 }
                 console.log('updated topic:', JSON.stringify(data));
@@ -278,8 +281,45 @@ function addNewCategory(topicId, newCategory, res, req) {
                     res.sendStatus(200);
                   }
                 });
-            }
-        });
-});
+              }
+            }); // end findOne
+          });
 
-        module.exports = router;
+          router.put('/idea/:modIdea', function(req, res) {
+            var modifiedIdea = req.params.modIdea;
+            var currentTopic = req.user.currentTopic;
+            var currentIdea = req.body;
+            console.log('current idea to be modified:', currentIdea);
+
+            Topic.findOne({topic: currentTopic},
+              function(err, data) {
+                if(err) {
+                  console.log('Unable to find topic:', err);
+                  res.sendStatus(500);
+                } else {
+                  console.log('Data retrieved from the db', data);
+                  // Loop through all the categories in the topic.
+                  for (i=0; i<data.categories.length; i++) {
+                    // Loop through all the ideas in each category.
+                    for (j=0; j<data.categories[i].ideas.length; j++) {
+                      // Checks if the current idea matches the target idea
+                      if (data.categories[i].ideas[j]._id == currentIdea._id) {
+                        data.categories[i].ideas[j].idea = modifiedIdea;
+                      }
+                    }
+                  }
+                  console.log('updated topic:', JSON.stringify(data));
+                  // Save the updated topic to the db.
+                  data.save(function(err){
+                    if(err) {
+                      console.log('error with save:', err);
+                      res.sendStatus(500);
+                    } else {
+                      res.sendStatus(200);
+                    }
+                  });
+                }
+              });
+            });
+
+            module.exports = router;

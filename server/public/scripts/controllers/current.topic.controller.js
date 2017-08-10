@@ -108,6 +108,14 @@ myApp.controller('CurrentTopicController', function(IdeaShuffleService, $http, $
     });
   };
 
+  // Removes a category from the db.
+  vm.removeCategory = function(category) {
+    $http.delete('/topic/category/' + category._id).then(function(response) {
+      console.log('got a response on the category delete route:', response);
+      vm.getCurrentTopic();
+    });
+  };
+
   // Create a dialogue prompt for modifying an idea.
   vm.showModifyIdeaPrompt = function(currentIdea) {
      // Setup the properties for the prompt.
