@@ -151,6 +151,12 @@ myApp.controller('VisualsController', function(IdeaShuffleService, $http, $mdDia
               return d.id;
             });
 
+        // var text = vm.svg.append("text")
+        //   .data(graph.nodes)
+        //   .text(function(d) {
+        //     return d.id;
+        //   });
+
 
         simulation
             .nodes(graph.nodes)
@@ -169,6 +175,9 @@ myApp.controller('VisualsController', function(IdeaShuffleService, $http, $mdDia
           node
               .attr("cx", function(d) { return d.x; })
               .attr("cy", function(d) { return d.y; });
+          // text
+          //     .attr("cx", function(d) { return d.x; })
+          //     .attr("cy", function(d) { return d.y; });
         }
 
         function dragstarted(d) {
