@@ -106,7 +106,7 @@ myApp.controller('VisualsController', function(IdeaShuffleService, $http, $mdDia
           //
           .force("link", d3.forceLink().id(function(d) { return d.id; }))
           // Sets the strength of the force which pushes dots apart
-          .force("charge", d3.forceManyBody().strength(-100))
+          .force("charge", d3.forceManyBody().strength(-300))
           // Sets the center of gravity for the graph
           .force("center", d3.forceCenter(width / 2, height / 2));
 
@@ -128,13 +128,14 @@ myApp.controller('VisualsController', function(IdeaShuffleService, $http, $mdDia
 
         var node = vm.svg.append("g")
             .attr("class", "nodes")
-          .selectAll("circle")
+          .selectAll("text")
           .data(graph.nodes)
-          .enter().append("circle")
+          .enter().append("text")
             // Adds a class to each node
             .attr("class", function(d) {return '"' + d.group + '"'; })
-            // Sets the radius of each node
-            .attr("r", 5)
+            .text(function(d) {
+              return d.id;
+            })
             // Sets the color of each node based on its group
             .attr("fill", function(d) { if (d.group == 'complete') {
               return "#d3d3d3";
@@ -173,8 +174,8 @@ myApp.controller('VisualsController', function(IdeaShuffleService, $http, $mdDia
               .attr("y2", function(d) { return d.target.y; });
 
           node
-              .attr("cx", function(d) { return d.x; })
-              .attr("cy", function(d) { return d.y; });
+              .attr("x", function(d) { return d.x; })
+              .attr("y", function(d) { return d.y; });
           // text
           //     .attr("cx", function(d) { return d.x; })
           //     .attr("cy", function(d) { return d.y; });
