@@ -3,14 +3,60 @@ myApp.controller('VisualsController', function(IdeaShuffleService, $http, $mdDia
   var vm = this;
   vm.userService = IdeaShuffleService;
   vm.userService.getuser();
+  console.log(vm.userService);
+
+  vm.getCurrentTopic = function() {
+    console.log(vm.userService.userObject.currentTopic);
+    $http.get('/topic/categories/' + vm.userService.userObject.currentTopic)
+      .then(function(response){
+        console.log('Got response from categories GET:', response);
+        vm.userService.currentTopicInfo = response;
+        vm.svg = "";
+        vm.refreshGraph();
+      });
+  };
+
+  vm.addIdea = function(category) {
+    console.log('adding idea within', category);
+    // Create a dialogue prompt for adding a new idea.
+    vm.showIdeaPrompt = function(ev) {
+       // Setup the properties for the prompt.
+       var confirm = $mdDialog.prompt()
+         .title('Got a new idea?')
+         .placeholder('Idea Description')
+         .ariaLabel('Idea Description')
+         .targetEvent(ev)
+         .ok('Add')
+         .cancel('Cancel');
+
+       // How to respond to the users input to the prompt.
+       $mdDialog.show(confirm).then(function(result) {
+         // This will run if the user clicks create.
+         console.log('Creating a new idea:', result);
+         // basic POST request to create a new topic.
+         $http.post('/topic/idea/visuals/' + result, category).then(function(response){
+           console.log('Got response from new topic Post:', response);
+           vm.getCurrentTopic();
+         });
+       }, function() {
+         // This will run if the user clicks cancel.
+         console.log('Canceled creating a new topic');
+       });
+    };
+
+    vm.showIdeaPrompt();
+  };
 
   // D3
   vm.refreshGraph = function() {
       var width = window.innerWidth;
       var height = 600;
 
+      d3.select("#svgElement").remove();
+
+
       // Selects the svg element on the DOM and stores it in a variable
-      var svg = d3.select("#canvasContainer").append("svg").attr("width", width).attr("height", height);
+      vm.svg = d3.select("#canvasContainer").append("svg").attr("width", width).attr("height", height).attr("id", "svgElement");
 
       //  Sets the color scale to be used when coloring svg elements
       var color = d3.scaleOrdinal(d3.schemeCategory20);
@@ -32,7 +78,7 @@ myApp.controller('VisualsController', function(IdeaShuffleService, $http, $mdDia
 
         // Appends a group to the svg with all of the links as line elements,
         // using data from graph.links
-        var link = svg.append("g")
+        var link = vm.svg.append("g")
             // sets a class for the g element to 'links'
             .attr("class", "links")
           .selectAll("line")
@@ -40,7 +86,7 @@ myApp.controller('VisualsController', function(IdeaShuffleService, $http, $mdDia
           .enter().append("line")
             .attr("stroke-width", function(d) { return Math.sqrt(d.value); });
 
-        var node = svg.append("g")
+        var node = vm.svg.append("g")
             .attr("class", "nodes")
           .selectAll("circle")
           .data(graph.nodes)
@@ -61,7 +107,10 @@ myApp.controller('VisualsController', function(IdeaShuffleService, $http, $mdDia
                 .on("end", dragended));
 
         node.append("title")
-            .text(function(d) { return d.id; });
+            .text(function(d) {
+              return d.id;
+            });
+
 
         simulation
             .nodes(graph.nodes)
@@ -97,6 +146,8 @@ myApp.controller('VisualsController', function(IdeaShuffleService, $http, $mdDia
           if (!d3.event.active) simulation.alphaTarget(0);
           d.fx = null;
           d.fy = null;
+          console.log('inside of drag ended on:', d);
+          vm.addIdea(d);
         }
       });
     };

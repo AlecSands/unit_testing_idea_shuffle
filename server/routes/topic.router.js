@@ -173,6 +173,48 @@ function addNewCategory(topicId, newCategory, res, req) {
 
     // IDEAS ROUTES
     // POST to create a new idea for the given category.
+    router.post('/idea/visuals/:idea', function(req, res){
+      var newIdea = req.params.idea;
+      var currentTopic = req.user.currentTopic;
+      var currentCategory = req.body;
+      // Add a new idea to the current category.
+      console.log('adding new idea:', newIdea, currentTopic, currentCategory);
+      addNewVisualIdea(currentTopic, currentCategory.id, newIdea, res, req);
+    });
+
+    // Add a new idea to the current category.
+    function addNewVisualIdea(topic, category, newIdea, res, req) {
+      Topic.findOne({topic: topic},
+        function(err, topic) {
+          if(err) {
+            console.log('err with new category:', err);
+            res.sendStatus(500);
+          } else {
+            // Loop through the categories to find amatch with the current category.
+            console.log('going to start looping');
+            for (i=0; i<topic.categories.length; i++) {
+              console.log('looping');
+              if (topic.categories[i].category == category) {
+                console.log('found a match');
+                // Once there is a match push the new idea into the array.
+                topic.categories[i].ideas.push({idea: newIdea});
+                // Save the updated topic to the database.
+                // In the future put the anonymous function into a callback.
+                topic.save(function(err){
+                  if(err) {
+                    console.log('error with save:', err);
+                    res.sendStatus(500);
+                  } else {
+                    res.sendStatus(200);
+                  }
+                });
+              }
+            }
+          }
+        }); // end findOne
+      }
+
+    // POST to create a new idea for the given category.
     router.post('/idea/:idea', function(req, res){
       var newIdea = req.params.idea;
       var currentTopic = req.user.currentTopic;
@@ -240,6 +282,8 @@ function addNewCategory(topicId, newCategory, res, req) {
             }
           }); // end findOne
         }
+
+
 
 
         // delete an idea in the database.
