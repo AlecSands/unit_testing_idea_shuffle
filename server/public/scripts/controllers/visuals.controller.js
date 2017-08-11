@@ -11,9 +11,49 @@ myApp.controller('VisualsController', function(IdeaShuffleService, $http, $mdDia
       .then(function(response){
         console.log('Got response from categories GET:', response);
         vm.userService.currentTopicInfo = response;
-        vm.svg = "";
         vm.refreshGraph();
       });
+  };
+
+  vm.add = function(d) {
+    if (d.group == 2) {
+      vm.addIdea(d);
+    } else if (d.group == 1) {
+      vm.addCategory(d);
+    } else {
+      console.log('clicked on an idea?');
+    }
+  };
+
+  vm.addCategory = function(d) {
+    // Create a dialogue prompt for adding a new category.
+    vm.showPrompt = function(ev) {
+       // Setup the properties for the prompt.
+       var confirm = $mdDialog.prompt()
+         .title('What is the new category?')
+         .placeholder('Category Name')
+         .ariaLabel('Category Name')
+         .initialValue('Category')
+         .targetEvent(ev)
+         .ok('Add')
+         .cancel('Cancel');
+
+       // How to respond to the users input to the prompt.
+       $mdDialog.show(confirm).then(function(result) {
+         // This will run if the user clicks create.
+         console.log('Creating a new category:', result);
+         // basic POST request to create a new topic.
+         $http.post('/topic/category/' + result).then(function(response){
+           console.log('Got response from new topic Post:', response);
+           vm.getCurrentTopic();
+         });
+       }, function() {
+         // This will run if the user clicks cancel.
+         console.log('Canceled creating a new topic');
+       });
+    };
+
+    vm.showPrompt();
   };
 
   vm.addIdea = function(category) {
@@ -147,7 +187,7 @@ myApp.controller('VisualsController', function(IdeaShuffleService, $http, $mdDia
           d.fx = null;
           d.fy = null;
           console.log('inside of drag ended on:', d);
-          vm.addIdea(d);
+          vm.add(d);
         }
       });
     };
