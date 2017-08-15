@@ -6,6 +6,16 @@ myApp.controller('VisualsController', function(IdeaShuffleService, $http, $mdDia
   console.log(vm.userService);
 
   vm.dots = true;
+  vm.tone = {};
+
+  vm.analyzeTone = function() {
+    console.log('going to analyze the tone');
+    $http.put('/visuals/tone', vm.userService.currentTopicInfo)
+      .then(function(response) {
+        console.log('Got a response about tone', response);
+        vm.tone = response.data;
+      });
+  };
 
   vm.switchDisplay = function() {
     vm.dots = !vm.dots;
@@ -130,6 +140,8 @@ myApp.controller('VisualsController', function(IdeaShuffleService, $http, $mdDia
       d3.json('visuals/' + vm.userService.userObject.currentTopic, function(error, graph) {
 
         if (error) throw error;
+
+        console.log('logging graph', graph);
 
         // Appends a group to the svg with all of the links as line elements,
         // using data from graph.links

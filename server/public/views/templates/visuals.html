@@ -2,6 +2,19 @@
 <md-button class="md-raised" aria-label="Modify Category" ng-click="vc.switchDisplay()">
   Dots or Text
 </md-button>
+<md-button class="md-raised" aria-label="Modify Category" ng-click="vc.analyzeTone()">
+  Analyze Tone
+</md-button>
+<div class="md-raised" layout="column" ng-show="vc.tone.document_tone" ng-repeat="toneCategory in vc.tone.document_tone.tone_categories">
+  <p>{{toneCategory.category_name}}</p>
+  <div layout="row">
+    <md-card flex="50" ng-repeat="tone in toneCategory.tones">
+      <md-card-title>
+        {{tone.tone_name}}: {{tone.score}}
+      </md-card-title>
+    </md-card>
+  </div>
+</div>
 <div id="canvasContainer">
 
 </div>

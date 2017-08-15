@@ -60,22 +60,53 @@ router.get('/:topic', function(req, res) {
 
 // Watson
 
-// var ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
-//
-// var tone_analyzer = new ToneAnalyzerV3({
-//   "url": "https://gateway.watsonplatform.net/tone-analyzer/api",
-//   "username": "288f2ed6-0c43-41ad-b4f5-f7a546c145c2",
-//   "password": "EKwe43kJF11z",
-//   version_date: '2016-05-19'
-// });
-//
-// tone_analyzer.tone({ text: 'I am thinking that hiding ducks around Prime is really fun.' },
-//   function(err, tone) {
-//     if (err)
-//       console.log(err);
-//     else
-//       console.log(JSON.stringify(tone, null, 2));
-// });
+var ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
+
+var tone_analyzer = new ToneAnalyzerV3({
+  "url": "https://gateway.watsonplatform.net/tone-analyzer/api",
+  "username": "288f2ed6-0c43-41ad-b4f5-f7a546c145c2",
+  "password": "EKwe43kJF11z",
+  version_date: '2016-05-19'
+});
+
+var analyzeTone = function(text) {
+  return tone_analyzer.tone({ text: text },
+    function(err, tone) {
+      if (err) {
+        console.log(err);
+        return err;
+      } else {
+        console.log('from Watson', tone);
+        return tone;
+      }
+    });
+
+  };
+
+  router.put('/tone', function (req, res) {
+    console.log('analyze this', req.body);
+    var text = req.body.data.topic + ". ";
+    for (i=0; i<req.body.data.categories.length; i++) {
+      text = text + req.body.data.categories[i].category + ". ";
+      for (j=0; j<req.body.data.categories[i].ideas.length; j++) {
+        text = text + req.body.data.categories[i].ideas[j].idea + ". ";
+      }
+    }
+    console.log('text to be analyzed:', text);
+    tone_analyzer.tone({ text: text },
+      function(err, tone) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log('from Watson', tone);
+          res.send(tone);
+        }
+      });
+      // analyzeTone(text).then(function (response) {
+      //   res.send(response);
+      // });
+
+    });
 
 
 module.exports = router;
