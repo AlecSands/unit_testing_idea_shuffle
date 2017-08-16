@@ -7,6 +7,7 @@ myApp.controller('VisualsController', function(IdeaShuffleService, $http, $mdDia
 
   vm.dots = true;
   vm.tone = {};
+  vm.navBar = false;
 
   vm.toggleRight = buildToggler('right');
 

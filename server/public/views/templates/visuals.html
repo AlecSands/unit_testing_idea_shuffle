@@ -1,9 +1,20 @@
-<div ng-include="'views/partials/nav.html'"></div>
+<div class="navBar check-element animate-show-hide" ng-show="vc.navBar" ng-include="'views/partials/nav.html'"></div>
 
-<i class="material-icons">chevron_left</i>
+<!-- <md-icon class="smallIcon" md-svg-icon="vendors/svgicon/navigation/ic_chevron_right_18px.svg"></md-icon> -->
+<div class="navExpandButton" layout="row" layout-align="center center">
+  <md-icon class="expandNav" md-svg-icon="vendors/svgicon/navigation/ic_expand_more_18px.svg" ng-click="vc.navBar = !vc.navBar"></md-icon>
+</div>
+
+<div class="displayMenu" ng-show="vc.displayMenu" layout="column">
+
+</div>
+
+<div class="displayMenuButton" layout="column">
+  <md-icon class="expandDisplayMenu" md-svg-icon="vendors/svgicon/navigation/ic_chevron_right_18px.svg" ng-click="vc.displayMenu = !vc.displayMenu"></md-icon>
+</div>
 
 <md-sidenav class="md-sidenav-right" md-component-id="right"
-          md-disable-backdrop md-whiteframe="4">
+md-disable-backdrop md-whiteframe="4">
 
 <md-toolbar class="md-theme-indigo">
   <h1 class="md-toolbar-tools">Disabled Backdrop</h1>
@@ -13,10 +24,10 @@
 </md-toolbar>
 
 
-  <div class="widget" ng-controller="CurrentTopicController as ctc">
-    <div class="not-container-controller">
+<div class="widget" ng-controller="CurrentTopicController as ctc">
+  <div class="not-container-controller">
 
-      <h4 class="md-title">{{ctc.userService.userObject.currentTopic}}</h1>
+    <h4 class="md-title">{{ctc.userService.userObject.currentTopic}}</h1>
       <div id="drag-containment">
         <md-content class="md-padding" layout="column">
           <div class="">
@@ -69,16 +80,16 @@
 
 </md-sidenav>
 
-<md-button ng-click="vc.toggleRight()" class="md-raised">
-            Toggle Sidenav
-          </md-button>
+<!-- <md-button ng-click="vc.toggleRight()" class="md-raised">
+  Toggle Sidenav
+</md-button>
 
 <md-button class="md-raised" aria-label="Modify Category" ng-click="vc.switchDisplay()">
   Dots or Text
 </md-button>
 <md-button class="md-raised" aria-label="Modify Category" ng-click="vc.analyzeTone()">
   Analyze Tone
-</md-button>
+</md-button> -->
 <div class="md-raised" layout="column" ng-show="vc.tone.document_tone" ng-repeat="toneCategory in vc.tone.document_tone.tone_categories">
   <p>{{toneCategory.category_name}}</p>
   <div layout="row">

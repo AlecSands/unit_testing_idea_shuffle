@@ -9,19 +9,77 @@ md-icon {
   opacity: 0.5;
 }
 
-/*.as-sortable-item {
-    min-height: 20px;
-    margin: 1px 2px 5px 1px;
-    border-radius: 10px;
-    border: solid 1px black;
-}*/
-
 md-card md-card-content {
   padding-left: 10px;
   padding-top: 0px;
   padding-right: 0px;
   padding-bottom: 0px;
 }
+
+.displayMenu {
+  background-color: black;
+  height: 100%;
+  width: 50px;
+}
+
+.expandDisplayMenu {
+  background-color: gray;
+  height: 100%;
+}
+
+.animate-show-hide.ng-hide {
+  margin-top: -44px;
+}
+
+.expandNav:focus {
+    outline: none;
+    border: 0;
+ }
+
+.animate-show-hide.ng-hide-add,
+.animate-show-hide.ng-hide-remove {
+  transition: all linear 0.5s;
+}
+
+.expandNav {
+  animation-duration: 2s;
+  animation-name: shrinkButton;
+  width: 24px;
+  height: 24px;
+}
+
+.expandNav:hover {
+  animation-duration: 2s;
+  animation-name: expandButton;
+  width: 50px;
+  height: 50px;
+}
+
+@keyframes expandButton {
+  from {
+    width: 24px;
+    height: 24px;
+  }
+
+  to {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+@keyframes shrinkButton {
+  from {
+    width: 50px;
+    height: 50px;
+  }
+
+  to {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+
 
 .md-icon-button {
   padding: 0px;
@@ -43,7 +101,7 @@ md-card md-card-content {
 }
 
 .instructions {
-  background-color: #333333;
+  background-color: white;
   color: #DDDDDD;
   padding: 15px;
 }
@@ -94,7 +152,7 @@ md-card md-card-content {
 }
 
 .navbar {
-  background-color: #333333;
+  background-color: white;
   width: 100%;
   border-radius: 0px;
 }
@@ -122,14 +180,12 @@ li {
 
 li a {
   display: block;
-  color: white;
-  text-align: center;
+  color: black;
   padding: 14px 16px;
   text-decoration: none;
 }
 
 /* Change the link color to #111 (black) on hover */
 li a:hover {
-  text-decoration: underline;
-  color: #eee;
+  color: blue;
 }
