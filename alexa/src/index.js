@@ -14,15 +14,26 @@ const Alexa = require('alexa-sdk');
 
 const APP_ID = undefined;  // TODO replace with your app ID (OPTIONAL).
 
-
 const languageStrings = {
     'en': {
         translation: {
             FACTS: [
                 'A year on Mercury is just 88 days long.',
+                'Despite being farther from the Sun, Venus experiences higher temperatures than Mercury.',
+                'Venus rotates anti-clockwise, possibly because of a collision in the past with an asteroid.',
+                'On Mars, the Sun appears about half the size as it does on Earth.',
+                'Earth is the only planet not named after a god.',
+                'Jupiter has the shortest day of all the planets.',
+                'The Milky Way galaxy will collide with the Andromeda Galaxy in about 5 billion years.',
+                'The Sun contains 99.86% of the mass in the Solar System.',
+                'The Sun is an almost perfect sphere.',
+                'A total solar eclipse can happen once every 1 to 2 years. This makes them a rare event.',
+                'Saturn radiates two and a half times more energy into space than it receives from the sun.',
+                'The temperature inside the Sun can reach 15 million degrees Celsius.',
+                'The Moon is moving approximately 3.8 cm away from our planet every year.',
             ],
             SKILL_NAME: 'Space Facts',
-            GET_FACT_MESSAGE: "Here's your fun fact: ",
+            GET_FACT_MESSAGE: "Here's your fact: ",
             HELP_MESSAGE: 'You can say tell me a space fact, or, you can say exit... What can I help you with?',
             HELP_REPROMPT: 'What can I help you with?',
             STOP_MESSAGE: 'Goodbye!',
@@ -31,8 +42,19 @@ const languageStrings = {
     'en-US': {
         translation: {
             FACTS: [
-                'Dogs are animals and so are deer.',
-                'Three inhibitors are located in your base, each corresponding to one of the lanes. These prevent enemy Super Minions from spawning in that lane. Destroying an Inhibitor can give your team a hefty advantage over your opponents.',
+                'A year on Mercury is just 88 days long.',
+                'Despite being farther from the Sun, Venus experiences higher temperatures than Mercury.',
+                'Venus rotates counter-clockwise, possibly because of a collision in the past with an asteroid.',
+                'On Mars, the Sun appears about half the size as it does on Earth.',
+                'Earth is the only planet not named after a god.',
+                'Jupiter has the shortest day of all the planets.',
+                'The Milky Way galaxy will collide with the Andromeda Galaxy in about 5 billion years.',
+                'The Sun contains 99.86% of the mass in the Solar System.',
+                'The Sun is an almost perfect sphere.',
+                'A total solar eclipse can happen once every 1 to 2 years. This makes them a rare event.',
+                'Saturn radiates two and a half times more energy into space than it receives from the sun.',
+                'The temperature inside the Sun can reach 15 million degrees Celsius.',
+                'The Moon is moving approximately 3.8 cm away from our planet every year.',
             ],
             SKILL_NAME: 'American Space Facts',
         },
@@ -85,7 +107,6 @@ const languageStrings = {
 
 const handlers = {
     'LaunchRequest': function () {
-        console.log('launch request with this:', this);
         this.emit('GetFact');
     },
     'GetNewFactIntent': function () {
@@ -95,16 +116,11 @@ const handlers = {
         // Get a random space fact from the space facts list
         // Use this.t() to get corresponding language data
         const factArr = this.t('FACTS');
-        console.log('factArr:', factArr);
         const factIndex = Math.floor(Math.random() * factArr.length);
-        console.log('factIndex:', factIndex);
         const randomFact = factArr[factIndex];
-        console.log('randomFact:', randomFact);
 
         // Create speech output
         const speechOutput = this.t('GET_FACT_MESSAGE') + randomFact;
-        console.log('speechOutput:', speechOutput);
-        console.log('this.emit', this.emit(':tellWithCard', speechOutput, this.t('SKILL_NAME'), randomFact));
         this.emit(':tellWithCard', speechOutput, this.t('SKILL_NAME'), randomFact);
     },
     'AMAZON.HelpIntent': function () {
@@ -121,7 +137,6 @@ const handlers = {
 };
 
 exports.handler = function (event, context) {
-    console.log('this event and context:', event, context);
     const alexa = Alexa.handler(event, context);
     alexa.APP_ID = APP_ID;
     // To enable string internationalization (i18n) features, set a resources object.

@@ -62,10 +62,21 @@ router.get('/:topic', function(req, res) {
 
 var ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
 
+if(process.env.MONGODB_URI != undefined) {
+    // use the string value of the environment variable
+    watsonUsername = process.env.WATSON_USERNAME;
+    watsonPassword = process.env.WATSON_PASSWORD;
+} else {
+    // use the local database server
+    var watson = require('..modules/ref.js');
+    watsonUsername = watson.WATSON_USERNAME;
+    watsonPassword = watson.WATSON_PASSWORD;
+}
+
 var tone_analyzer = new ToneAnalyzerV3({
   "url": "https://gateway.watsonplatform.net/tone-analyzer/api",
-  "username": "288f2ed6-0c43-41ad-b4f5-f7a546c145c2",
-  "password": "EKwe43kJF11z",
+  "username": watsonUsername,
+  "password": watsonPassword,
   version_date: '2016-05-19'
 });
 

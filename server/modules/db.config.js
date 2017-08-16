@@ -8,8 +8,9 @@ if(process.env.MONGODB_URI != undefined) {
     // use the string value of the environment variable
     mongoURI = process.env.MONGODB_URI;
 } else {
+    var mongoRefs = require('/refs.js');
     // use the local database server
-    mongoURI = 'mongodb://localhost:27017/solo';
+    mongoURI = mongoRefs.MONGODB_URI;
 }
 
 // var mongoURI = "mongodb://localhost:27017/passport";
