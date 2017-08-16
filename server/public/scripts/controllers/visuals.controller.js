@@ -1,4 +1,4 @@
-myApp.controller('VisualsController', function(IdeaShuffleService, $http, $mdDialog) {
+myApp.controller('VisualsController', function(IdeaShuffleService, $http, $mdDialog, $mdSidenav) {
   console.log('VisualsController created');
   var vm = this;
   vm.userService = IdeaShuffleService;
@@ -7,6 +7,14 @@ myApp.controller('VisualsController', function(IdeaShuffleService, $http, $mdDia
 
   vm.dots = true;
   vm.tone = {};
+
+  vm.toggleRight = buildToggler('right');
+
+  function buildToggler(componentId) {
+      return function() {
+        $mdSidenav(componentId).toggle();
+      };
+    }
 
   vm.analyzeTone = function() {
     console.log('going to analyze the tone');

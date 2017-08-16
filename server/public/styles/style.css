@@ -16,6 +16,23 @@ md-icon {
     border: solid 1px black;
 }*/
 
+md-card md-card-content {
+  padding-left: 10px;
+  padding-top: 0px;
+  padding-right: 0px;
+  padding-bottom: 0px;
+}
+
+.md-icon-button {
+  padding: 0px;
+  margin: 0px;
+}
+
+.smallIcon {
+  max-width: 12px;
+  max-height: 12px;
+}
+
 .idea {
   padding: 10px;
 }
@@ -82,7 +99,7 @@ md-icon {
   border-radius: 0px;
 }
 
-.md-button.md-icon-button {
+/*.md-button.md-icon-button {
     margin: 0 0.6rem;
     height: 4.8rem;
     min-width: 0;
@@ -90,7 +107,7 @@ md-icon {
     padding-left: 0;
     padding-right: 0;
     width: 4.8rem;
-}
+}*/
 
 ul {
   list-style-type: none;

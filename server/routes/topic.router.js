@@ -375,7 +375,7 @@ function addNewCategory(topicId, newCategory, res, req) {
             router.post('/alexa/:idea', function(req, res) {
               var newIdea = req.params.idea;
               var currentTopic = req.body;
-              var currentCategory = 'Alexa';
+              var currentCategory = 'Other';
               console.log('current category to be modified:', currentTopic);
               console.log('current category to be modified:', currentTopic.key);
               topicToModify = capitalizeFirstLetter(currentTopic.key);
