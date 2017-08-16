@@ -371,7 +371,7 @@ function addNewCategory(topicId, newCategory, res, req) {
               });
             });
 
-            // Modify a category in the db
+            // Modify a category in the db and add an idea
             router.post('/alexa/:idea', function(req, res) {
               var newIdea = req.params.idea;
               var currentTopic = req.body;
