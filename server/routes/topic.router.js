@@ -373,9 +373,9 @@ function addNewCategory(topicId, newCategory, res, req) {
               var currentTopic = req.body;
               var currentCategory = 'Alexa';
               console.log('current category to be modified:', currentTopic);
-              console.log('current category to be modified:', currentTopic.value.key);
+              console.log('current category to be modified:', currentTopic.key);
 
-              Topic.findOne({topic: currentTopic},
+              Topic.findOne({topic: currentTopic.key},
                 function(err, data) {
                   if(err) {
                     console.log('Unable to find topic:', err);
