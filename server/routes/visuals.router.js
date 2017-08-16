@@ -68,56 +68,56 @@ if(process.env.MONGODB_URI != undefined) {
     watsonPassword = process.env.WATSON_PASSWORD;
 } else {
     // use the local database server
-    var watson = require('..modules/ref.js');
-    watsonUsername = watson.WATSON_USERNAME;
-    watsonPassword = watson.WATSON_PASSWORD;
+    // var watson = require('..modules/ref.js');
+    // watsonUsername = watson.WATSON_USERNAME;
+    // watsonPassword = watson.WATSON_PASSWORD;
 }
 
-var tone_analyzer = new ToneAnalyzerV3({
-  "url": "https://gateway.watsonplatform.net/tone-analyzer/api",
-  "username": watsonUsername,
-  "password": watsonPassword,
-  version_date: '2016-05-19'
-});
-
-var analyzeTone = function(text) {
-  return tone_analyzer.tone({ text: text },
-    function(err, tone) {
-      if (err) {
-        console.log(err);
-        return err;
-      } else {
-        console.log('from Watson', tone);
-        return tone;
-      }
-    });
-
-  };
-
-  router.put('/tone', function (req, res) {
-    console.log('analyze this', req.body);
-    var text = req.body.data.topic + ". ";
-    for (i=0; i<req.body.data.categories.length; i++) {
-      text = text + req.body.data.categories[i].category + ". ";
-      for (j=0; j<req.body.data.categories[i].ideas.length; j++) {
-        text = text + req.body.data.categories[i].ideas[j].idea + ". ";
-      }
-    }
-    console.log('text to be analyzed:', text);
-    tone_analyzer.tone({ text: text },
-      function(err, tone) {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log('from Watson', tone);
-          res.send(tone);
-        }
-      });
-      // analyzeTone(text).then(function (response) {
-      //   res.send(response);
-      // });
-
-    });
+// var tone_analyzer = new ToneAnalyzerV3({
+//   "url": "https://gateway.watsonplatform.net/tone-analyzer/api",
+//   "username": watsonUsername,
+//   "password": watsonPassword,
+//   version_date: '2016-05-19'
+// });
+//
+// var analyzeTone = function(text) {
+//   return tone_analyzer.tone({ text: text },
+//     function(err, tone) {
+//       if (err) {
+//         console.log(err);
+//         return err;
+//       } else {
+//         console.log('from Watson', tone);
+//         return tone;
+//       }
+//     });
+//
+//   };
+//
+//   router.put('/tone', function (req, res) {
+//     console.log('analyze this', req.body);
+//     var text = req.body.data.topic + ". ";
+//     for (i=0; i<req.body.data.categories.length; i++) {
+//       text = text + req.body.data.categories[i].category + ". ";
+//       for (j=0; j<req.body.data.categories[i].ideas.length; j++) {
+//         text = text + req.body.data.categories[i].ideas[j].idea + ". ";
+//       }
+//     }
+//     console.log('text to be analyzed:', text);
+//     tone_analyzer.tone({ text: text },
+//       function(err, tone) {
+//         if (err) {
+//           console.log(err);
+//         } else {
+//           console.log('from Watson', tone);
+//           res.send(tone);
+//         }
+//       });
+//       // analyzeTone(text).then(function (response) {
+//       //   res.send(response);
+//       // });
+//
+//     });
 
 
 module.exports = router;

@@ -14,6 +14,7 @@ router.get('/', function(req, res){
       res.sendStatus(500);
     } else {
       var allTopics = result;
+      console.log(allTopics);
       res.send(allTopics);
     }
   });
@@ -365,5 +366,51 @@ function addNewCategory(topicId, newCategory, res, req) {
                 }
               });
             });
+
+            // Modify a category in the db
+            router.post('/alexa/:idea', function(req, res) {
+              var newIdea = req.params.idea;
+              var currentTopic = req.body;
+              var currentCategory = 'Alexa';
+              console.log('current category to be modified:', currentTopic);
+
+              Topic.findOne({topic: currentTopic},
+                function(err, data) {
+                  if(err) {
+                    console.log('Unable to find topic:', err);
+                    res.sendStatus(500);
+                  } else {
+                    console.log('Data retrieved from the db', data);
+                    var alexaExists = false;
+                    var alexaIndex = -1;
+                    // Loop through all the categories in the topic.
+                    for (var i=0; i<data.categories.length; i++) {
+                      // Checks if the current category matches the target category
+                      if (data.categories[i].category == currentCategory) {
+                        alexaExists = true;
+                        alexaIndex = i;
+                      }
+                    }
+                    if (alexaExists) {
+                      console.log('creating new idea in Alexa');
+                      data.categories[alexaIndex].ideas.push({idea: newIdea});
+                    } else {
+                      console.log('creating new category and idea');
+                      data.categories.push({category: 'Alexa', ideas: [{idea: newIdea}]});
+                    }
+                  }
+                  console.log('updated topic:', JSON.stringify(data));
+                  // Save the updated topic to the db.
+                  data.save(function(err){
+                    if(err) {
+                      console.log('error with save:', err);
+                      res.sendStatus(500);
+                    } else {
+                      res.sendStatus(200);
+                    }
+                  });
+
+                });
+              });
 
             module.exports = router;
