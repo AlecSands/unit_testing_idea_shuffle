@@ -373,6 +373,7 @@ function addNewCategory(topicId, newCategory, res, req) {
               var currentTopic = req.body;
               var currentCategory = 'Alexa';
               console.log('current category to be modified:', currentTopic);
+              console.log('current category to be modified:', currentTopic.value.key);
 
               Topic.findOne({topic: currentTopic},
                 function(err, data) {
@@ -398,18 +399,17 @@ function addNewCategory(topicId, newCategory, res, req) {
                       console.log('creating new category and idea');
                       data.categories.push({category: 'Alexa', ideas: [{idea: newIdea}]});
                     }
+                    console.log('updated topic:', JSON.stringify(data));
+                    // Save the updated topic to the db.
+                    data.save(function(err){
+                      if(err) {
+                        console.log('error with save:', err);
+                        res.sendStatus(500);
+                      } else {
+                        res.sendStatus(200);
+                      }
+                    });
                   }
-                  console.log('updated topic:', JSON.stringify(data));
-                  // Save the updated topic to the db.
-                  data.save(function(err){
-                    if(err) {
-                      console.log('error with save:', err);
-                      res.sendStatus(500);
-                    } else {
-                      res.sendStatus(200);
-                    }
-                  });
-
                 });
               });
 
