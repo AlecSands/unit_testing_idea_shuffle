@@ -4,6 +4,10 @@ var router = express.Router();
 // Required Schemas.
 var Topic = require('../models/topic.js');
 
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 // TOPIC ROUTES
 // GET route for getting all topics from the db.
 router.get('/', function(req, res){
@@ -374,8 +378,9 @@ function addNewCategory(topicId, newCategory, res, req) {
               var currentCategory = 'Alexa';
               console.log('current category to be modified:', currentTopic);
               console.log('current category to be modified:', currentTopic.key);
+              topicToModify = capitalizeFirstLetter(currentTopic.key);
 
-              Topic.findOne({topic: currentTopic.key},
+              Topic.findOne({topic: topicToModify},
                 function(err, data) {
                   if(err) {
                     console.log('Unable to find topic:', err);
