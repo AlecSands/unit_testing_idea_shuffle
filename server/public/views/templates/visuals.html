@@ -1,25 +1,17 @@
-<div class="navBar check-element animate-show-hide" ng-show="vc.navBar" ng-include="'views/partials/nav.html'"></div>
+<div class="other">
+  <div class="navBar check-element animate-show-hide-nav" ng-show="vc.navBar" ng-include="'views/partials/nav.html'"></div>
 
-<!-- <md-icon class="smallIcon" md-svg-icon="vendors/svgicon/navigation/ic_chevron_right_18px.svg"></md-icon> -->
-<div class="navExpandButton" layout="row" layout-align="center center">
-  <md-icon class="expandNav" md-svg-icon="vendors/svgicon/navigation/ic_expand_more_18px.svg" ng-click="vc.navBar = !vc.navBar"></md-icon>
-</div>
 
-<div class="page" layout="row">
-  <div class="displayMenu" ng-show="vc.displayMenu" layout="column" layout-align="center center">
-    <!-- <md-button ng-click="vc.toggleRight()" class="md-raised">
-      Toggle Sidenav
-    </md-button>
-    <md-button class="md-raised" aria-label="Modify Category" ng-click="vc.switchDisplay()">
-      Dots or Text
-    </md-button>
-    <md-button class="md-raised" aria-label="Modify Category" ng-click="vc.analyzeTone()">
-      Analyze Tone
-    </md-button> -->
-    <ul class="displayMenuList">
-      <li class="md-subhead displayListItem">Toggle Text/Dots</li>
-      <li class="md-subhead displayListItem">Analyze Tone</li>
-    </ul>
+  <div class="navExpandButton" layout="row" layout-align="center center">
+    <md-icon class="expandNav" md-svg-icon="vendors/svgicon/navigation/ic_expand_more_18px.svg" ng-click="vc.navBar = !vc.navBar"></md-icon>
+  </div>
+
+
+    <div class="displayMenu animate-show-hide-dis" ng-show="vc.displayMenu" layout="column" layout-align="center center">
+  <ul class="displayMenuList">
+    <li class="md-subhead displayListItem" ng-click="vc.switchDisplay()">Toggle Text/Dots</li>
+    <li class="md-subhead displayListItem" ng-click="vc.analyzeTone()">Analyze Tone</li>
+  </ul>
   </div>
 
   <div class="displayMenuButton" layout="row">
@@ -104,7 +96,24 @@
       </md-card>
     </div>
   </div>
-  <div id="canvasContainer">
 
+
+  <div class="listViewButton" layout="row">
+    <md-icon class="expandListView" md-svg-icon="vendors/svgicon/navigation/ic_chevron_left_18px.svg" ng-click="vc.listView = !vc.listView"></md-icon>
   </div>
+
+  <div class="listView animate-show-hide-list" ng-show="vc.listView" layout="column" layout-align="center center">
+    <ul class="listViewList">
+      <li class="md-subhead displayListItem" ng-click="vc.switchDisplay()">Toggle Text/Dots</li>
+      <li class="md-subhead displayListItem" ng-click="vc.analyzeTone()">Analyze Tone</li>
+    </ul>
+  </div>
+</div>
+
+<!-- <div class="test">
+  test
+</div> -->
+
+<div id="canvasContainer">
+
 </div>

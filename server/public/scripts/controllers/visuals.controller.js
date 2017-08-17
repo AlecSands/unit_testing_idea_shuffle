@@ -8,7 +8,8 @@ myApp.controller('VisualsController', function(IdeaShuffleService, $http, $mdDia
   vm.dots = true;
   vm.tone = {};
   vm.navBar = false;
-  vm.displayMenu = true;
+  vm.displayMenu = false;
+  vm.listView = false;
 
   vm.toggleRight = buildToggler('right');
 
@@ -125,7 +126,7 @@ myApp.controller('VisualsController', function(IdeaShuffleService, $http, $mdDia
   // D3
   vm.refreshTextGraph = function() {
       var width = window.innerWidth;
-      var height = 600;
+      var height = window.innerHeight;
 
       d3.select("#svgElement").remove();
 
@@ -241,7 +242,7 @@ myApp.controller('VisualsController', function(IdeaShuffleService, $http, $mdDia
 
     vm.refreshDotsGraph = function() {
       var width = window.innerWidth;
-      var height = 600;
+      var height = window.innerHeight;
 
       d3.select("#svgElement").remove();
 

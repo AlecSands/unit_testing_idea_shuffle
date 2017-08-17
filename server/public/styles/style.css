@@ -3,7 +3,8 @@ body, html {
   padding: 0;
   /*font-family: sans-serif;*/
   font-size: 14px;
-  background-color: white
+  background-color: white;
+  position: relative;
 }
 
 md-icon {
@@ -17,9 +18,44 @@ md-card md-card-content {
   padding-bottom: 0px;
 }
 
+#canvasContainter {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  z-index: 20;
+}
+
+svg {
+  z-index: 20;
+  position: fixed;
+  left: 0px;
+  top: 0px;
+}
+
+.test {
+  background-color: gray;
+  width: 300px;
+  height: 300px;
+}
+
+.other {
+  background-color: gray;
+  width: 300px;
+  height: 300px;
+}
+
 .page {
   height: 100vh;
+  width: 100vw;
   position: fixed;
+  left: 0px;
+  top: 0px;
+}
+
+.listView {
+  background-color: white;
+  min-height: calc(~"100vh - 0px");
+  width: 200px;
 }
 
 .displayMenu {
@@ -36,60 +72,129 @@ md-card md-card-content {
   cursor: pointer;
 }
 
+.displayListItem:hover {
+  cursor: pointer;
+  color: #FFA000;
+}
+
 .expandDisplayMenu {
   background-color: white;
   min-height: calc(~"100vh - 0px");
 }
 
-.animate-show-hide.ng-hide {
-  margin-top: -44px;
+.expandDisplayMenu {
+  animation-duration: 2s;
+  animation-name: shrinkButton;
+  width: 50px;
+  height: 50px;
+}
+
+.expandDisplayMenu:hover {
+  animation-duration: 2s;
+  animation-name: expandButton;
+  width: 100px;
+  height: 100px;
 }
 
 .expandNav:focus {
-    outline: none;
-    border: 0;
- }
+  outline: none;
+  border: 0;
+}
 
-.animate-show-hide.ng-hide-add,
-.animate-show-hide.ng-hide-remove {
+.expandDisplayMenu:focus {
+  outline: none;
+  border: 0;
+}
+
+.expandListView:focus {
+  outline: none;
+  border: 0;
+}
+
+.animate-show-hide-list.ng-hide {
+  margin-right: 0px;
+  position: fixed;
+  right: 0px
+}
+
+.animate-show-hide-list.ng-hide {
+  margin-right: -44px;
+  position: fixed;
+  right: 0px
+}
+
+.animate-show-hide-list.ng-hide-add,
+.animate-show-hide-list.ng-hide-remove {
+  transition: all linear 0.5s;
+}
+
+.animate-show-hide-nav.ng-hide {
+  margin-top: -44px;
+}
+
+.animate-show-hide-nav.ng-hide-add,
+.animate-show-hide-nav.ng-hide-remove {
+  transition: all linear 0.5s;
+}
+
+.animate-show-hide-dis.ng-hide {
+  margin-left: -200px;
+}
+
+.animate-show-hide-dis.ng-hide-add,
+.animate-show-hide-dis.ng-hide-remove {
   transition: all linear 0.5s;
 }
 
 .expandNav {
   animation-duration: 2s;
   animation-name: shrinkButton;
-  width: 24px;
-  height: 24px;
+  width: 50px;
+  height: 50px;
 }
 
 .expandNav:hover {
   animation-duration: 2s;
   animation-name: expandButton;
+  width: 100px;
+  height: 100px;
+}
+
+.expandListView {
+  animation-duration: 2s;
+  animation-name: shrinkButton;
   width: 50px;
   height: 50px;
 }
 
+.expandListView:hover {
+  animation-duration: 2s;
+  animation-name: expandButton;
+  width: 100px;
+  height: 100px;
+}
+
 @keyframes expandButton {
   from {
-    width: 24px;
-    height: 24px;
+    width: 50px;
+    height: 50px;
   }
 
   to {
-    width: 50px;
-    height: 50px;
+    width: 100px;
+    height: 100px;
   }
 }
 
 @keyframes shrinkButton {
   from {
-    width: 50px;
-    height: 50px;
+    width: 100px;
+    height: 100px;
   }
 
   to {
-    width: 24px;
-    height: 24px;
+    width: 50px;
+    height: 50px;
   }
 }
 
@@ -154,7 +259,7 @@ md-card md-card-content {
 }
 
 .message:nth-child(odd) {
-   background-color: #eeeeee;
+  background-color: #eeeeee;
 }
 
 .message:nth-child(even) {
@@ -172,13 +277,13 @@ md-card md-card-content {
 }
 
 /*.md-button.md-icon-button {
-    margin: 0 0.6rem;
-    height: 4.8rem;
-    min-width: 0;
-    line-height: 4.8rem;
-    padding-left: 0;
-    padding-right: 0;
-    width: 4.8rem;
+margin: 0 0.6rem;
+height: 4.8rem;
+min-width: 0;
+line-height: 4.8rem;
+padding-left: 0;
+padding-right: 0;
+width: 4.8rem;
 }*/
 
 ul {
@@ -194,8 +299,6 @@ li {
 
 li a {
   display: block;
-  animation-duration: 1s;
-  animation-name: leaveLink;
   color: black;
   padding: 14px 16px;
   text-decoration: none;
@@ -203,27 +306,5 @@ li a {
 
 /* Change the link color to #111 (black) on hover */
 li a:hover {
-  animation-duration: 1s;
-  animation-name: hoverLink;
   color: #FFA000;
-}
-
-@keyframes hoverLink {
-  from {
-    color: black;
-  }
-
-  to {
-    color: #FFA000;
-  }
-}
-
-@keyframes leaveLink {
-  from {
-    color: #FFA000;
-  }
-
-  to {
-    color: black;
-  }
 }
