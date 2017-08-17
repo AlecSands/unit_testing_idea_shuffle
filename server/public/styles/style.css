@@ -3,6 +3,7 @@ body, html {
   padding: 0;
   /*font-family: sans-serif;*/
   font-size: 14px;
+  background-color: white
 }
 
 md-icon {
@@ -16,15 +17,28 @@ md-card md-card-content {
   padding-bottom: 0px;
 }
 
+.page {
+  height: 100vh;
+  position: fixed;
+}
+
 .displayMenu {
-  background-color: black;
-  height: 100%;
-  width: 50px;
+  background-color: white;
+  min-height: calc(~"100vh - 0px");
+  width: 200px;
+}
+
+.displayMenuList {
+  padding-left: 20px;
+}
+
+.displayListItem {
+  cursor: pointer;
 }
 
 .expandDisplayMenu {
-  background-color: gray;
-  height: 100%;
+  background-color: white;
+  min-height: calc(~"100vh - 0px");
 }
 
 .animate-show-hide.ng-hide {
@@ -180,6 +194,8 @@ li {
 
 li a {
   display: block;
+  animation-duration: 1s;
+  animation-name: leaveLink;
   color: black;
   padding: 14px 16px;
   text-decoration: none;
@@ -187,5 +203,27 @@ li a {
 
 /* Change the link color to #111 (black) on hover */
 li a:hover {
-  color: blue;
+  animation-duration: 1s;
+  animation-name: hoverLink;
+  color: #FFA000;
+}
+
+@keyframes hoverLink {
+  from {
+    color: black;
+  }
+
+  to {
+    color: #FFA000;
+  }
+}
+
+@keyframes leaveLink {
+  from {
+    color: #FFA000;
+  }
+
+  to {
+    color: black;
+  }
 }
