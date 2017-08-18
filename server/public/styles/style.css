@@ -12,7 +12,7 @@ main {
 }
 
 md-icon {
-  opacity: 0.5;
+  opacity: 1;
 }
 
 md-card md-card-content {
@@ -22,9 +22,72 @@ md-card md-card-content {
   padding-bottom: 0px;
 }
 
+.nav {
+  height: 10vh;
+}
+
+.list {
+  height: 80vh;
+}
+
+.settings {
+  height: 10vh;
+}
+
 #menuButton {
   width: 50px;
   height: 50px;
+  min-height: 50px;
+  min-width: 50px;
+  z-index: 8;
+}
+
+#menuButton:focus {
+  outline: none;
+  border: 0;
+}
+
+.menu {
+  background-color: white;
+  outline: solid;
+  outline-width: 5px;
+  outline-color: black;
+}
+
+.animate-show-hide-dis.ng-hide {
+  margin-left: -400px;
+}
+
+.animate-show-hide-dis.ng-hide-add,
+.animate-show-hide-dis.ng-hide-remove {
+  transition: all linear 0.5s;
+}
+
+.displayMenu {
+  min-height: 100vh;
+  min-width: 400px;
+  z-index: 8;
+}
+
+.displayMenuList {
+  padding-left: 210px;
+  padding-top: 10px;
+  left: 0px;
+  display: block;
+}
+
+.displayListItem {
+  cursor: pointer;
+}
+
+.displayListItem:hover {
+  cursor: pointer;
+  color: #FFA000;
+}
+
+.displayListItem:focus {
+  outline: none;
+  border: 0;
 }
 
 #title {
@@ -32,21 +95,21 @@ md-card md-card-content {
   top: 0px;
   width: 100vw;
   height: 50px;
-  z-index: 10;
+  z-index: 6;
 }
 
 #canvasContainer {
   position: fixed;
   left: 0px;
   top: 0px;
-  z-index: -70;
+  z-index: 5;
 }
 
 #sideNav {
   left: 0px;
   width: 50px;
   height: 100vh;
-  z-index: 0;
+  z-index: 8;
 }
 
 #topicTitle {
@@ -98,24 +161,7 @@ md-card md-card-content {
   width: 200px;
 }
 
-.displayMenu {
-  background-color: white;
-  min-height: calc(~"100vh - 0px");
-  width: 200px;
-}
 
-.displayMenuList {
-  padding-left: 20px;
-}
-
-.displayListItem {
-  cursor: pointer;
-}
-
-.displayListItem:hover {
-  cursor: pointer;
-  color: #FFA000;
-}
 
 .expandDisplayMenu {
   /*animation-duration: 2s;
@@ -169,15 +215,6 @@ md-card md-card-content {
 
 .animate-show-hide-nav.ng-hide-add,
 .animate-show-hide-nav.ng-hide-remove {
-  transition: all linear 0.5s;
-}
-
-.animate-show-hide-dis.ng-hide {
-  margin-left: -200px;
-}
-
-.animate-show-hide-dis.ng-hide-add,
-.animate-show-hide-dis.ng-hide-remove {
   transition: all linear 0.5s;
 }
 
@@ -260,21 +297,25 @@ md-card md-card-content {
   padding: 15px;
 }
 
-md-icon {
-  width: 50px;
-  height: 50px;
-}
-
 .links line {
   stroke: lightgray;
   stroke-opacity: 1;
   stroke-width: 1.5px;
 }
 
+.nodes text {
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.nodes text:hover {
+  font-size: 24px;
+}
+
 .nodes circle {
   stroke: white;
   stroke-width: 5px;
-  cursor: pointer;
+  cursor: pointer
   /*animation-duration: 3s;
   animation-name: expandNode;
   animation-iteration-count: infinite;*/
@@ -437,15 +478,21 @@ ul {
   overflow: hidden;
 }
 
-li {
+/*li {
   float: left;
-}
+}*/
 
-li a {
+/*li a {
   display: block;
   color: black;
   padding: 14px 16px;
   text-decoration: none;
+}*/
+
+li a {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 /* Change the link color to #111 (black) on hover */

@@ -8,7 +8,7 @@ myApp.controller('VisualsController', function(IdeaShuffleService, $http, $mdDia
   vm.dots = true;
   vm.tone = {};
   vm.navBar = false;
-  vm.displayMenu = true;
+  vm.displayMenu = false;
   vm.listView = false;
 
   vm.toggleRight = buildToggler('right');
@@ -142,7 +142,7 @@ myApp.controller('VisualsController', function(IdeaShuffleService, $http, $mdDia
           //
           .force("link", d3.forceLink().id(function(d) { return d.id; }))
           // Sets the strength of the force which pushes dots apart
-          .force("charge", d3.forceManyBody().strength(-300))
+          .force("charge", d3.forceManyBody().strength(-1000))
           // Sets the center of gravity for the graph
           .force("center", d3.forceCenter(width / 2, height / 2));
 

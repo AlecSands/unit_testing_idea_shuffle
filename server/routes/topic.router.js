@@ -29,10 +29,11 @@ router.post('/create/:topic', function(req, res){
   // Create an object to be passed to the db.
   var newTopic = {
     topic: req.params.topic,
-    categories: [{
-      category: 'Uncategorized',
-      ideas: [{idea: 'Placeholder'}]
-    }]
+    categories: []
+    // categories: [{
+    //   category: 'Uncategorized',
+    //   ideas: [{idea: 'Placeholder'}]
+    // }]
   };
   // Create the new document in the database.
   Topic.create(newTopic, function(err, post) {

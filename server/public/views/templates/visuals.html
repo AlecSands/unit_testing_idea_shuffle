@@ -119,11 +119,81 @@
   <!-- <div class="displayMenuButton" layout="row" layout-align="center center">
   <md-icon class="expandDisplayMenu" md-svg-icon="vendors/svgicon/navigation/ic_chevron_right_18px.svg" ng-click="vc.displayMenu = !vc.displayMenu"></md-icon>
 </div> -->
-<div class="displayMenu animate-show-hide-dis" ng-show="vc.displayMenu" layout="column" layout-align="center center">
-  <ul class="displayMenuList">
-    <li class="md-subhead displayListItem" ng-click="vc.switchDisplay()">Toggle Text/Dots</li>
-    <li class="md-subhead displayListItem" ng-click="vc.analyzeTone()">Analyze Tone</li>
-  </ul>
+
+
+<div class="displayMenu animate-show-hide-dis" ng-show="vc.displayMenu" layout="column">
+<!-- <div class="displayMenu animate-show-hide-dis" ng-show="vc.displayMenu" layout="column" layout-align="end center"> -->
+  <div class="nav menu" flex="none">
+    <ul class="displayMenuList">
+      <li class="md-subhead"><a href="#/selectTopic">Select Topic</a></li>
+      <li class="md-subhead displayListItem" ng-click="vc.userService.logout()">Logout</li>
+    </ul>
+  </div>
+  <div class="list menu" flex="none">
+
+    <div class="widget" ng-controller="CurrentTopicController as ctc">
+      <div class="not-container-controller">
+
+        <h4 class="md-title">{{ctc.userService.userObject.currentTopic}}</h1>
+          <div id="drag-containment">
+            <ul class="displayMenuList" ng-repeat="category in ctc.userService.currentTopicInfo.data.categories">
+              <li class="md-title displayListItem">{{category.category}}</li>
+              <li class="md-subhead displayListItem" ng-repeat="idea in category.ideas">{{idea.idea}}</li>
+            </ul>
+            <!-- <md-content class="md-padding" layout="column">
+              <div class="">
+                <md-card flex="90" ng-repeat="category in ctc.userService.currentTopicInfo.data.categories">
+                  <md-card-title>
+                    <md-card-title-text>
+                      <span class="md-subhead">{{category.category}}</span>
+                    </md-card-title-text>
+                    <md-button class="md-icon-button md-primary" aria-label="Add Idea" ng-click="ctc.addIdea(category); vm.getCurrentTopic();">
+                      <md-icon class="smallIcon" md-svg-icon="vendors/svgicon/ic_add_black_24px.svg"></md-icon>
+                    </md-button>
+                    <md-button class="md-icon-button md-primary" aria-label="Modify Category" ng-click="ctc.showModifyCategoryPrompt(category)">
+                      <md-icon class="smallIcon" md-svg-icon="vendors/svgicon/ic_remove_black_24px.svg"></md-icon>
+                    </md-button>
+                    <md-button class="md-icon-button md-primary" aria-label="Remove Category" ng-click="ctc.removeCategory(category)">
+                      <md-icon class="smallIcon" md-svg-icon="vendors/svgicon/ic_clear_black_24px.svg"></md-icon>
+                    </md-button>
+                  </md-card-title>
+                  <div class="idea" as-sortable="ctc.dragControlListeners" ng-model="category.ideas">
+                    <div class="" ng-repeat="idea in category.ideas">
+                      <md-card-content layout="row" layout-align="space-between" as-sortable-item>
+                        <div as-sortable-item-handle class="" flex="50" >
+                          <p class="md-body-1">
+                            {{idea.idea}}
+                          </p>
+                        </div>
+                        <md-card-actions flex="50" layout="column">
+                          <md-button class="md-icon-button md-primary" aria-label="Modify Idea" ng-click="ctc.showModifyIdeaPrompt(idea)">
+                            <md-icon class="smallIcon" md-svg-icon="vendors/svgicon/ic_remove_circle_outline_black_24px.svg"></md-icon>
+                          </md-button>
+                          <md-button class="md-icon-button md-primary" aria-label="Remove Idea" ng-click="ctc.removeIdea(idea)">
+                            <md-icon class="smallIcon" md-svg-icon="vendors/svgicon/ic_highlight_off_black_24px.svg"></md-icon>
+                          </md-button>
+                        </md-card-actions>
+                      </md-card-content>
+                    </div>
+                  </div>
+                </md-card>
+              </div>
+            </md-content> -->
+          </div>
+          <br>
+          <md-button class="md-primary md-raised" ng-click="ctc.showPrompt(stc.test())"  >
+            Add New Category
+          </md-button>
+        </div>
+      </div>
+  </div>
+  <div class="settings menu" flex="none" layout-align="end center">
+    <ul class="displayMenuList">
+      <li class="md-subhead displayListItem" ng-click="vc.switchDisplay()">Toggle Text/Dots</li>
+      <li class="md-subhead displayListItem" ng-click="vc.analyzeTone()">Analyze Tone</li>
+    </ul>
+  </div>
+
 </div>
 
 <md-icon id="menuButton" md-svg-icon="vendors/svgicon/navigation/ic_chevron_right_18px.svg" ng-click="vc.displayMenu = !vc.displayMenu"></md-icon>
