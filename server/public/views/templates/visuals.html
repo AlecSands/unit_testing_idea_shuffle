@@ -1,3 +1,4 @@
+<!-- <div class="page">
 <div class="other">
   <div class="navBar check-element animate-show-hide-nav" ng-show="vc.navBar" ng-include="'views/partials/nav.html'"></div>
 
@@ -109,11 +110,27 @@
     </ul>
   </div>
 </div>
-
+</div> -->
 <!-- <div class="test">
   test
 </div> -->
 
-<div id="canvasContainer">
-
+<div id="sideNav" layout="row" layout-align="center center">
+  <!-- <div class="displayMenuButton" layout="row" layout-align="center center">
+  <md-icon class="expandDisplayMenu" md-svg-icon="vendors/svgicon/navigation/ic_chevron_right_18px.svg" ng-click="vc.displayMenu = !vc.displayMenu"></md-icon>
+</div> -->
+<div class="displayMenu animate-show-hide-dis" ng-show="vc.displayMenu" layout="column" layout-align="center center">
+  <ul class="displayMenuList">
+    <li class="md-subhead displayListItem" ng-click="vc.switchDisplay()">Toggle Text/Dots</li>
+    <li class="md-subhead displayListItem" ng-click="vc.analyzeTone()">Analyze Tone</li>
+  </ul>
 </div>
+
+<md-icon id="menuButton" md-svg-icon="vendors/svgicon/navigation/ic_chevron_right_18px.svg" ng-click="vc.displayMenu = !vc.displayMenu"></md-icon>
+</div>
+
+<div id="title" layout="row" layout-align="end start">
+  <h3 class="md-display-1" id="topicTitle">{{vc.userService.userObject.currentTopic}}</h3>
+</div>
+
+<div id="canvasContainer"></div>

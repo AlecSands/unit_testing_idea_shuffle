@@ -3,8 +3,12 @@ body, html {
   padding: 0;
   /*font-family: sans-serif;*/
   font-size: 14px;
-  background-color: white;
+  background-color: transparent;
   position: relative;
+}
+
+main {
+  background-color: transparent;
 }
 
 md-icon {
@@ -18,25 +22,61 @@ md-card md-card-content {
   padding-bottom: 0px;
 }
 
-#canvasContainter {
+#menuButton {
+  width: 50px;
+  height: 50px;
+}
+
+#title {
+  position: fixed;
+  top: 0px;
+  width: 100vw;
+  height: 50px;
+  z-index: 10;
+}
+
+#canvasContainer {
   position: fixed;
   left: 0px;
   top: 0px;
-  z-index: 20;
+  z-index: -70;
 }
 
-svg {
+#sideNav {
+  left: 0px;
+  width: 50px;
+  height: 100vh;
+  z-index: 0;
+}
+
+#topicTitle {
+  margin-top: 10px;
+  padding-right: 20px;
+  color: rgb(31, 119, 180);
+  animation-name: loadTitle;
+  animation-duration: 5s;
+}
+
+@keyframes loadTitle {
+  0% {
+    font-size: 0px;
+  }
+  65% {
+    font-size: 0px;
+    margin-top: 363px;
+    margin-right: 50%;
+  }
+  100% {
+
+  }
+}
+
+/*svg.canvasContainer {
   z-index: 20;
   position: fixed;
   left: 0px;
   top: 0px;
-}
-
-.test {
-  background-color: gray;
-  width: 300px;
-  height: 300px;
-}
+}*/
 
 .other {
   background-color: gray;
@@ -78,23 +118,18 @@ svg {
 }
 
 .expandDisplayMenu {
-  background-color: white;
-  min-height: calc(~"100vh - 0px");
+  /*animation-duration: 2s;
+  animation-name: shrinkButton;*/
+  /*width: 50px;
+  height: 50px;*/
 }
 
-.expandDisplayMenu {
-  animation-duration: 2s;
-  animation-name: shrinkButton;
-  width: 50px;
-  height: 50px;
-}
-
-.expandDisplayMenu:hover {
+/*.expandDisplayMenu:hover {
   animation-duration: 2s;
   animation-name: expandButton;
   width: 100px;
   height: 100px;
-}
+}*/
 
 .expandNav:focus {
   outline: none;
@@ -225,13 +260,122 @@ svg {
   padding: 15px;
 }
 
-.links line {
-  stroke: #999;
-  stroke-opacity: 0.6;
+md-icon {
+  width: 50px;
+  height: 50px;
 }
-.nodes circle {
-  stroke: #fff;
+
+.links line {
+  stroke: lightgray;
+  stroke-opacity: 1;
   stroke-width: 1.5px;
+}
+
+.nodes circle {
+  stroke: white;
+  stroke-width: 5px;
+  cursor: pointer;
+  /*animation-duration: 3s;
+  animation-name: expandNode;
+  animation-iteration-count: infinite;*/
+}
+
+.nodes circle:hover {
+  stroke: #FFA000;
+}
+
+.nodes circle:nth-child(1) {
+  r: 10;
+  animation-duration: 5s;
+  animation-name: expandNode;
+  animation-iteration-count: 2;
+}
+
+.nodes circle:not(:first-child) {
+  r: 10;
+  animation-delay: 1.5s;
+  animation-timing-function: ease-in-out;
+  animation-duration: 5s;
+  animation-name: expandNodeSmall;
+  animation-iteration-count: 2;
+}
+
+/*.nodes circle:nth-of-type(3n) {
+  animation-name: expandNode;
+  animation-iteration-count: infinite;
+  animation-delay: 1s;
+}
+
+.nodes circle:nth-of-type(3n+2) {
+  animation-name: expandNode;
+  animation-iteration-count: infinite;
+  animation-delay: 1.5s;
+}
+
+.nodes circle:nth-of-type(3n+1) {
+  animation-name: expandNode;
+  animation-iteration-count: infinite;
+  animation-delay: 2s;
+}*/
+
+@keyframes expandNode {
+  0% {
+    r: 10;
+  }
+  65% {
+    r: 10;
+  }
+  70% {
+    r: 3;
+  }
+  75% {
+    r: 25;
+  }
+  80% {
+    r: 7;
+  }
+  85% {
+    r: 16;
+  }
+  90% {
+    r: 9;
+  }
+  95% {
+    r: 12;
+  }
+  100% {
+    r: 10;
+  }
+}
+
+@keyframes expandNodeSmall {
+  0% {
+    r: 10;
+  }
+  65% {
+    r: 10;
+  }
+  70% {
+    r: 7;
+  }
+  75% {
+    r: 13;
+  }
+  80% {
+    r: 8;
+  }
+  85% {
+    r: 12;
+  }
+  90% {
+    r: 9;
+  }
+  95% {
+    r: 11;
+  }
+  100% {
+    r: 10;
+  }
 }
 
 #entryForm {
