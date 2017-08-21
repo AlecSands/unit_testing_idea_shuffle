@@ -413,7 +413,7 @@ function addNewCategory(topicId, newCategory, res, req) {
 
                     } else {
                       console.log('creating new category and idea');
-                      data.categories.push({category: 'Alexa', ideas: [{idea: newIdea}]});
+                      data.categories.push({category: currentCategory, ideas: [{idea: newIdea}]});
                     }
                     console.log('updated topic:', JSON.stringify(data));
                     // Save the updated topic to the db.
