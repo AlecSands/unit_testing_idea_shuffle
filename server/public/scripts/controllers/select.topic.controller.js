@@ -54,7 +54,7 @@ myApp.controller('SelectTopicController', function(IdeaShuffleService, $mdDialog
     $http.put('/user/currenttopic/' + vm.userService.userObject.currentTopic)
       .then(function(response) {
         console.log('Got response from current topic PUT route:', response);
-        $location.path("/currentTopic");
+        $location.path("/visuals");
       });
   };
 

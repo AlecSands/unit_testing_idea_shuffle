@@ -11,13 +11,13 @@ myApp.controller('VisualsController', function(IdeaShuffleService, $http, $mdDia
   vm.displayMenu = false;
   vm.listView = false;
 
-  vm.toggleRight = buildToggler('right');
-
-  function buildToggler(componentId) {
-      return function() {
-        $mdSidenav(componentId).toggle();
-      };
-    }
+  // vm.toggleRight = buildToggler('right');
+  //
+  // function buildToggler(componentId) {
+  //     return function() {
+  //       $mdSidenav(componentId).toggle();
+  //     };
+  //   }
 
   vm.analyzeTone = function() {
     console.log('going to analyze the tone');
@@ -26,6 +26,29 @@ myApp.controller('VisualsController', function(IdeaShuffleService, $http, $mdDia
         console.log('Got a response about tone', response);
         vm.tone = response.data;
       });
+  };
+
+  vm.dragControlListeners = {
+    // accept: function (sourceItemHandleScope, destSortableScope) {return boolean;}, //override to determine drag is allowed or not. default is true.
+    itemMoved: function (event) {
+      console.log('in item moved:', vm.userService.currentTopicInfo);
+      topic = vm.userService.currentTopicInfo;
+      $http.put('/topic/idea/', topic).then(function(response){
+        console.log('Updating the database:', response);
+        vm.getCurrentTopic();
+      });
+    },
+    orderChanged: function(event) {
+      console.log('changing order', vm.userService.currentTopicInfo);
+      topic = vm.userService.currentTopicInfo;
+      $http.put('/topic/idea/', topic).then(function(response){
+        console.log('Updating the database:', response);
+        vm.getCurrentTopic();
+      });
+    },
+    containment: '#drag-containment', //optional param.
+    clone: false, //optional param for clone feature.
+    allowDuplicates: true, //optional param allows duplicates to be dropped.
   };
 
   vm.switchDisplay = function() {
@@ -50,6 +73,8 @@ myApp.controller('VisualsController', function(IdeaShuffleService, $http, $mdDia
         }
       });
   };
+
+  vm.getCurrentTopic();
 
   vm.add = function(d) {
     if (d.group == 2) {
@@ -352,7 +377,5 @@ myApp.controller('VisualsController', function(IdeaShuffleService, $http, $mdDia
         }
       });
     };
-
-    vm.refreshDotsGraph();
 
 });

@@ -400,7 +400,17 @@ function addNewCategory(topicId, newCategory, res, req) {
                     }
                     if (alexaExists) {
                       console.log('creating new idea in Alexa');
-                      data.categories[alexaIndex].ideas.push({idea: newIdea});
+                      for (var j = 0; j < data.categories[alexaIndex].ideas.length; j++) {
+                        var foundAMatch = false;
+                        if (newIdea == data.categories[alexaIndex].ideas[j].idea) {
+                          foundAMatch = true;
+                          console.log('found a match');
+                        } else {
+                          console.log('no match');
+                          data.categories[alexaIndex].ideas.push({idea: newIdea});
+                        }
+                      }
+
                     } else {
                       console.log('creating new category and idea');
                       data.categories.push({category: 'Alexa', ideas: [{idea: newIdea}]});

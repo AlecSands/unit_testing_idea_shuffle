@@ -52,6 +52,7 @@ md-card md-card-content {
   outline: solid;
   outline-width: 5px;
   outline-color: black;
+  overflow: auto
 }
 
 .animate-show-hide-dis.ng-hide {
@@ -110,6 +111,14 @@ md-card md-card-content {
   width: 50px;
   height: 100vh;
   z-index: 8;
+}
+
+.topic {
+  float: left;
+}
+
+md-content {
+  background: transparent;
 }
 
 #topicTitle {
