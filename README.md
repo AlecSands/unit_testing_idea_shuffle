@@ -1,30 +1,41 @@
-# Name of Project
+# Idea Shuffle
+
+https://tranquil-waters-36326.herokuapp.com/#/home
 
 One Paragraph of project description goes here. Link to the live version of the app if it's hosted on Heroku.
 
 ## Built With
 
-List technologies and frameworks here
+D3.js, Alexa custom skills creation, AngularJS, AngularJS Material, ng-sortable, Node.JS, MongoDB, Express.js, HTML5, CSS3, and Javascript.
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+-Clone the repository and copy it onto your machine
+-Make sure mongo is running in an open tab
+-Run 'npm install' and 'npm start' in terminal
+-Open a browser window to 'localhost:5000'
 
 ### Prerequisites
 
-Link to software that is required to install the app (e.g. node).
-
 - [Node.js](https://nodejs.org/en/)
-- List other prerequisites here
+- An Amazon Web Service (AWS) server will be required for the Alexa portion of the app.
+- An Amazon Developer account will be required to create the skill with intents and slots.
 
 
 ### Installing
 
 Steps to get the development environment running.
 
-## Screen Shot
+## Screen Shots
 
-Include one or two screen shots of your project here (optional). Remove if unused.
+Loading pages.
+![Image of topic selection page](screenshots/topicselect.jpeg)
+
+Dot brainstorming web.
+![Image of dot web](screenshots/dotweb.jpeg)
+
+Loading pages.
+![Image of text web](screenshots/textweb.jpeg)
 
 ## Documentation
 
