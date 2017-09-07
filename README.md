@@ -1,8 +1,8 @@
-# Idea Shuffle
+# Idea Shuffle - Solo Project
 
-https://tranquil-waters-36326.herokuapp.com/#/home
+Web application link: https://tranquil-waters-36326.herokuapp.com/#/home
 
-One Paragraph of project description goes here. Link to the live version of the app if it's hosted on Heroku.
+Idea Shuffle is a full-stack web application developed to upgrade the efficiency and convenience of brainstorming sessions.  Brainstorming sessions are displayed as idea webs to clarify the evolving organization of ideas for users.  To add ideas, users either interact with an Amazon Echo custom skill or click on nodes in the idea web.  Follow the instructions below to get this application up and running.
 
 ## Built With
 
