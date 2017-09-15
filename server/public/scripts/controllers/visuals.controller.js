@@ -11,14 +11,6 @@ myApp.controller('VisualsController', function(IdeaShuffleService, $http, $mdDia
   vm.displayMenu = false;
   vm.listView = false;
 
-  // vm.toggleRight = buildToggler('right');
-  //
-  // function buildToggler(componentId) {
-  //     return function() {
-  //       $mdSidenav(componentId).toggle();
-  //     };
-  //   }
-
   vm.analyzeTone = function() {
     console.log('going to analyze the tone');
     $http.put('/visuals/tone', vm.userService.currentTopicInfo)
@@ -214,13 +206,6 @@ myApp.controller('VisualsController', function(IdeaShuffleService, $http, $mdDia
             .text(function(d) {
               return d.id;
             });
-
-        // var text = vm.svg.append("text")
-        //   .data(graph.nodes)
-        //   .text(function(d) {
-        //     return d.id;
-        //   });
-
 
         simulation
             .nodes(graph.nodes)
