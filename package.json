@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "nodemon server/server.js",
+    "test": "mocha",
     "start": "node server/server.js"
   },
   "author": "Scott Bromander, Kris Szafranski",
@@ -21,6 +21,7 @@
     "body-parser": "^1.13.3",
     "bootstrap": "^3.3.5",
     "d3": "^4.10.0",
+    "eslint": "^4.6.1",
     "express": "^4.13.1",
     "express-session": "^1.13.0",
     "jquery": "^2.1.4",
@@ -32,5 +33,9 @@
     "path": "^0.11.14",
     "request": "^2.81.0",
     "watson-developer-cloud": "^2.37.0"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^3.5.3"
   }
 }

@@ -4,9 +4,13 @@ var router = express.Router();
 // Required Schemas.
 var Topic = require('../models/topic.js');
 
-function capitalizeFirstLetter(string) {
+router.capitalizeFirstLetter = function (string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
-}
+};
+
+// function capitalizeFirstLetter(string) {
+//     return string.charAt(0).toUpperCase() + string.slice(1);
+// }
 
 // TOPIC ROUTES
 // GET route for getting all topics from the db.
